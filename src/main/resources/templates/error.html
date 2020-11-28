@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <body class="marca_agua">
+    <!--<th:block th:include="fragments/header :: header"></th:block>-->
+    <div class="row">
+        <div class="col m12 s12">
+            <h3>Surgió un inconveniente al procesar la solicitud</h3>
+            <h6>Por favor, contacte con el administrador del sistema.</h6>
+            <br/><br/>
+            <a href="/">Ir al inicio</a>
+            <span th:text="${mensaje}"></span>
+        </div>
+
+    </div>
+
+    <!--<th:block th:include="fragments/footer :: footer"></th:block>-->
+</body>
+</html>

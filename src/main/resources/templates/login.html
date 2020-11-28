@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>DataPlus++</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<body class="marca_agua">
+<!--<th:block th:include="fragments/header :: header"></th:block>-->
+<div class="row">
+    <div class="col m4 s12"></div>
+
+    <div class="col m4 s12">
+        <section class="eternity-form">
+            <div class="login-content">
+                <form th:action="@{/login}" method="post">
+
+                    <div class="section-title">
+                        <div class="pull-left"><img src="img/user-profile.png" class="img-circle" alt="User Image" style="width: 50px; padding-top: -5px;"/> </div>
+                        <div class="panel-title text-center"><h5 style="color:#004370;">Ingreso al Sistema </h5></div>
+                        <br/>
+                        <i class="material-icons">info</i>&nbsp;Use usuario y clave institucional
+                    </div>
+                    <div class="textbox-wrap">
+                        <div class="input-group">
+                                <span class="input-group-addon ">
+                                    <i class="material-icons">account_circle</i>
+                                </span>
+                            <input type="text" id="username" name="username" required="required" class="form-control" placeholder="Username." autocomplete="true" autofocus="autofocus" />
+                        </div>
+                    </div>
+                    <div class="textbox-wrap">
+                        <div class="input-group">
+                                <span class="input-group-addon ">
+                                    <i class="material-icons">lock</i>
+                                </span>
+                            <input id="password" name="password" type="password" required="required" class="form-control" placeholder="Clave" />
+                        </div>
+                    </div>
+                    <div class="login-form-action clearfix">
+                        <button type="submit" class="btn btn-primary pull-right" style="background-color: #004370; color:white;">Ingresar &nbsp; <i class="material-icons">arrow_forward</i> </button>
+                    </div>
+                </form>
+            </div>
+            <div th:if="${param.error}" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <!--<span th:text="${mensaje}"></span>-->
+                <!--<span>Usuario o clave inválidos</span>-->
+                <span th:text="${param.error}"></span>
+            </div>
+            <!--                    <div th:if="${mensaje != null}" class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <span th:text="${mensaje}"></span>
+                                    <span th:text="${mensaje}"></span>
+                                </div>-->
+        </section>
+    </div>
+    <div class="col m4 s12"></div>
+</div>
+
+
+<!--<th:block th:include="fragments/footer :: footer"></th:block>-->
+
+
+<div id="mdl_registro" class="modal" style="height: 50%; width: 60%;">
+    <form method="POST" th:action="@{/register}">
+        <div class="modal-content">
+            <h4>Registrarse al sistema</h4>
+            <div class="row">
+                <span class="text-muted">si es la primera vez que ingresa, debe realizar este proceso</span>
+
+                <div class="textbox-wrap">
+                    <div class="input-group">
+                            <span class="input-group-addon ">
+                                <i class="material-icons">account_circle</i>
+                            </span>
+                        <input type="text" id="usuario" name="usuario" required="required" class="form-control" placeholder="ingrese usuario o correo UTPL" autocomplete="true" autofocus="autofocus" />
+                    </div>
+                </div>
+                <div class="textbox-wrap">
+                    <div class="input-group">
+                            <span class="input-group-addon ">
+                                <i class="material-icons">lock</i>
+                            </span>
+                        <input id="clave" name="clave" type="password" required="required" class="form-control" placeholder="Ingrese clave institucional." />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close waves-effect waves-green btn center-block blue">Validar Usuario</button>
+        </div>
+    </form>
+</div>
+
+<!--<th:block th:include="fragments/footer :: footer"></th:block>-->
+<script type="text/javascript">
+    $(function () {
+        $("input").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            increaseArea: '20%' // optional
+        });
+        $(".dark input").iCheck({
+            checkboxClass: 'icheckbox_polaris',
+            increaseArea: '20%' // optional
+        });
+        $(".form-control").focus(function () {
+            $(this).closest(".textbox-wrap").addClass("focused");
+        }).blur(function () {
+            $(this).closest(".textbox-wrap").removeClass("focused");
+        });
+
+        //On Scroll Animations
+
+        // <![CDATA[
+        if ($(window).width() >= 968 && !Modernizr.touch && Modernizr.cssanimations) {
+
+            $("body").addClass("scroll-animations-activated");
+            $('[data-animation-delay]').each(function () {
+                var animationDelay = $(this).data("animation-delay");
+                $(this).css({
+                    "-webkit-animation-delay": animationDelay,
+                    "-moz-animation-delay": animationDelay,
+                    "-o-animation-delay": animationDelay,
+                    "-ms-animation-delay": animationDelay,
+                    "animation-delay": animationDelay
+                });
+
+            });
+            $('[data-animation]').waypoint(function (direction) {
+                if (direction == "down") {
+                    $(this).addClass("animated " + $(this).data("animation"));
+
+                }
+            }, {
+                offset: '90%'
+            }).waypoint(function (direction) {
+                if (direction == "up") {
+                    $(this).removeClass("animated " + $(this).data("animation"));
+
+                }
+            }, {
+                offset: $(window).height() + 1
+            });
+        }
+        // ]]>
+        //End On Scroll Animations
+
+
+        $(".main-nav a[href]").click(function () {
+            var scrollElm = $(this).attr("href");
+
+            $("html,body").animate({scrollTop: $(scrollElm).offset().top}, 500);
+
+            $(".main-nav a[href]").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        // <![CDATA[
+        if ($(window).width() > 1000 && !Modernizr.touch) {
+            var options = {
+                $menu: ".main-nav",
+                menuSelector: 'a',
+                panelSelector: 'section',
+                namespace: '.panelSnap',
+                onSnapStart: function () { },
+                onSnapFinish: function ($target) {
+                    $target.find('input:first').focus();
+                },
+                directionThreshold: 50,
+                slideSpeed: 200
+            };
+            //$('body').panelSnap(options);
+
+        }
+        // ]]>
+
+        $(".colorBg a[href]").click(function () {
+            var scrollElm = $(this).attr("href");
+            $("html,body").animate({scrollTop: $(scrollElm).offset().top}, 500);
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
