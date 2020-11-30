@@ -22,26 +22,21 @@ public class ArticleProvider extends BaseEntity {
     //@JsonBackReference
     private Provider provider;
 
-    private double buyPrice;
     /**
-     * This field, add units a field stock of model Article.  So, two smile articles but with diferent provider add a field stock
+     * We use too for show alarms when there are a few units
      */
-    private int buyUnit;
+    private int stock;
 
-    private Date buyDate;
+
     private Date expirationDate;
+
+    private boolean status;
     /**
      * User that make register of article
      */
     private Date register;
 
-    public ArticleProvider(Article article, Provider provider, double buyPrice, int buyUnit, Date buyDate, Date register) {
-        this.article = article;
-        this.provider = provider;
-        this.buyPrice = buyPrice;
-        this.buyUnit = buyUnit;
-        this.buyDate = buyDate;
-        this.register = register;
+    public ArticleProvider() {
     }
 
     public Article getArticle() {
@@ -60,28 +55,12 @@ public class ArticleProvider extends BaseEntity {
         this.provider = provider;
     }
 
-    public double getBuyPrice() {
-        return buyPrice;
+    public int getStock() {
+        return stock;
     }
 
-    public void setBuyPrice(double buyPrice) {
-        this.buyPrice = buyPrice;
-    }
-
-    public int getBuyUnit() {
-        return buyUnit;
-    }
-
-    public void setBuyUnit(int buyUnit) {
-        this.buyUnit = buyUnit;
-    }
-
-    public Date getBuyDate() {
-        return buyDate;
-    }
-
-    public void setBuyDate(Date buyDate) {
-        this.buyDate = buyDate;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public Date getExpirationDate() {
@@ -98,5 +77,13 @@ public class ArticleProvider extends BaseEntity {
 
     public void setRegister(Date register) {
         this.register = register;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

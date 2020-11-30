@@ -29,7 +29,18 @@ public class Provider extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="ubication")
     private Ubication ubication;
+
+    private boolean status;
     private Date register;
+
+    public Provider() {
+    }
+
+    public Provider(ItemCatalog servicio, Ubication ubication, boolean status) {
+        this.servicio = servicio;
+        this.ubication = ubication;
+        this.status = status;
+    }
 
     public Provider(User user, Date register) {
         this.user = user;
@@ -66,5 +77,13 @@ public class Provider extends BaseEntity {
 
     public void setRegister(Date register) {
         this.register = register;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
