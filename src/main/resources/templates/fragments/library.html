@@ -1,0 +1,99 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="library">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link rel="shortcut icon" href="/img/icono.png" type="image/png"/>
+
+            <meta name="description" content="Sistema de Gestión Contable"/>
+            <meta name="keywords" content="contabilidad, inventario, clientes, proveedores, reportes"/>
+
+            <meta property="og:type" content="website"/>
+            <meta property="og:site_name" content="LarisaPlus"/>
+            <meta property="og:url" content="https://larisaplus.com"/>
+            <meta property="og:title" content="Sistema de Gestión Contable"/>
+            <meta property="og:image" content="https://larisaplus.com"/>
+            <meta property="og:description" content="Sistema de Gestión Contable Empresarial"/>
+
+            <meta name="twitter:card" content="resource"/>
+            <meta name="twitter:site" content="@larisa"/>
+            <meta name="twitter:url" content="/"/>
+            <meta name="twitter:title" content="SSistema de Gestión Contable"/>
+            <meta name="twitter:description" content="Sistema de Gestión Contable Empresarial"/>
+            <meta name="twitter:image" content="https://larisaplus.com"/>
+
+            <title>Larisa Plus++</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+            <link th:href="@{/css/preview.css}" rel="stylesheet" />
+
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+            <!--<link rel="stylesheet" th:href="@{/DataTables/datatables.min.css}"/>-->
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.material.min.css"/>
+
+            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css"/>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>
+            <!--            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+                        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css"/>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"/>-->
+
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css" />
+
+
+            <link rel="stylesheet" th:href="@{/css/ballon.css}" />
+            <link rel="stylesheet" th:href="@{/css/tooltip.css}" />
+
+            <style>
+                .bloque{
+                    height: 377px;
+                    max-height: 375px;
+                    margin: -5px -5px -5px -5px;
+                    color: white;
+                }
+
+                @-moz-document url-prefix() {
+                    fieldset { display: table-cell; }
+                }
+
+                input.input-box { background: steelblue; }
+
+                .colTD {
+                    color: white;
+                    background-color: steelblue;
+                }
+
+                .label-pill {
+                    padding-right: .6em;
+                    padding-left: .6em;
+                    border-radius: 10rem;
+                }
+            </style>
+            <style>
+                .blink {
+                    animation: blink-animation 1s steps(5, start) infinite;
+                    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+                }
+                @keyframes blink-animation {
+                    to {
+                        visibility: hidden;
+                    }
+                }
+                @-webkit-keyframes blink-animation {
+                    to {
+                        visibility: hidden;
+                    }
+                }
+            </style>
+            <style>
+                .tooltip-blue {
+                    --balloon-color: blue;
+                }
+            </style>
+        </head>
+    </div>
+</html>

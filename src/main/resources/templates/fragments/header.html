@@ -1,0 +1,319 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header">
+    <th:block th:include="fragments/library :: library"></th:block>
+
+    <style th:inline="text">
+        .marca_agua {
+            background: white;
+            /*background-image: url([[@{/img/vmad_body.png}]]);*/
+            background-position-y: 50px;
+            background-repeat: no-repeat;
+            /*padding: 0em 1em 2em 70px;*/
+            margin-top: 0;
+            font-family: sans-serif;
+            background-position: top left;
+            background-attachment: fixed;
+        }
+
+    </style>
+
+    <nav style="background: #003f72; height: 40px; position: fixed;" class="">
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+            <a th:href="${''}" target="_blank">
+                <img th:src="${''}" class="responsive-img" th:alt="${'Observatorio '+ '' }"
+                     style="height:40px;margin-top:-27px;"/>
+            </a>
+
+            <ul class="nav-mobile right hide-on-med-and-down" style="margin-top:50px;">
+                <li>
+                    <a href="#modal_mapa" class="btn btn-floating btn-small tooltipped modal-trigger"
+                       data-tooltip="Geolocalización de conflictos socioambientales" data-position="right"> <i
+                            class="material-icons">location_on</i> </a>
+                    <!--<a onclick="if($('#div_mapa').is(':visible'))$('#div_mapa').hide();else $('#div_mapa').show();" style="cursor:pointer;" class="btn btn-floating btn-small tooltipped" data-tooltip="Mostrar mapa" data-position="left"> <i class="material-icons">location_on</i> </a>-->
+                </li>
+                <li>
+                    <a href="#modal_autenticar" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
+                       data-tooltip="Ingresar al sistema" data-position="left"> <i
+                            class="material-icons">vpn_key</i> </a>
+                </li>
+                <li>
+                    <a href="#modal_reportar" class="btn btn-floating btn-small tooltipped modal-trigger"
+                       data-tooltip="Reportar conflicto" data-position="right"> <i class="material-icons">group</i>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="${'/observatorio/principal/'+''}" class="btn btn-floating btn-small tooltipped"
+                       data-tooltip="Ir al inicio" data-position="right"> <i class="material-icons">home</i> </a>
+                </li>
+
+                <li>
+                    <p th:text="${''}"
+                       style="font-family: 'Roboto Condensed', sans-serif; color:#eaab00; font-size: 16px;"></p>
+                </li>
+                <!--                    <li th:if="${#lists.isEmpty(menu)}">
+                                        <p style="float:right; margin-top: -20px;font-size: 12px;"><em>Sistema de Monitoreo de Conflictos con Sistema de Alerta Temprana</em></p>
+                                    </li>-->
+                <li>
+                    <a href="/larisa/logout" class="tooltipped" data-tooltip="Salir del sistema"
+                       data-position="left" style="cursor:pointer;margin-top:-10px;">
+                        <div class="chip">
+                            <img th:src="${'/img/user-profile.png'}" alt="Usuario Autenticado"/>
+                            &nbsp;&nbsp;
+                            <label th:text="${'Lavadora El Rey'}"></label>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li>
+            <a href="logout" class="tooltipped" data-tooltip="Salir del sistema" data-position="left"
+               style="cursor:pointer;">
+                <div class="chip">
+                    <img th:src="${'/img/user-profile.png'}" alt="Usuario Autenticado"/>
+                    <label th:text="${'Lavadora El Rey'}"></label>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a href="#modal_mapa" class="btn btn-floating btn-small tooltipped modal-trigger"
+               data-tooltip="Geolocalización de conflictos socioambientales" data-position="right"> <i
+                    class="material-icons">location_on</i> </a>
+            <!--<a onclick="if($('#div_mapa').is(':visible'))$('#div_mapa').hide();else $('#div_mapa').show();" style="cursor:pointer;" class="btn btn-floating btn-small tooltipped" data-tooltip="Mostrar mapa" data-position="left"> <i class="material-icons">location_on</i> </a>-->
+        </li>
+        <li>
+            <a href="#modal_autenticar" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
+               data-tooltip="Ingresar al sistema" data-position="left"> <i class="material-icons">account_circle</i>
+            </a>
+        </li>
+        <li>
+            <a href="#modal_reportar" class="btn btn-floating btn-small tooltipped modal-trigger"
+               data-tooltip="Reportar conflicto" data-position="right"> <i class="material-icons">check</i> </a>
+        </li>
+        <li>
+            <a href="/observatorio/principal" class="btn btn-floating btn-small tooltipped" data-tooltip="Ir al inicio"
+               data-position="right"> <i class="material-icons">home</i> </a>
+        </li>
+    </ul>
+
+    <div class="row">
+        <br/>
+        <div class="col-md-12">
+
+            <!--<div th:each="m : ${menu}" class="btn-group" style="padding-top: 10px;" >
+                <a id="dLabel" data-target="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false" style="cursor:pointer;">
+                        <span style="color:#003f72;" th:class="${m.titulo.icono}" aria-hidden="true">
+                            <span style="font-weight: bold; font-size:16px;" th:text="${m.titulo.nombre}"></span>
+                        </span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li th:each="it : ${m.items}" >
+                        <a th:href="${it.url}" style="cursor:pointer;">
+                            <span th:class="${it.icono}" aria-hidden="true" th:text="${it.nombre}"></span>
+                        </a>
+                        &nbsp;&nbsp;
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+    </div>
+
+    <div id="modal_mapa" class="modal modal-fixed-footer" style="height:620px;">
+        <div id="div_mapa" class="col s12 m12 right-left">
+            <iframe id="iframe_mapa" th:src="${'/observatorio/mapa/'+ '' + '/-1/-1'}"
+                    style="left: 0;width:100%; height: 600px;  border: none;overflow:scroll;"></iframe>
+        </div>
+    </div>
+
+
+    <!--Seccion para reportar conflictos por parte de la comunidad-->
+    <div id="modal_reportar" class="modal modal-fixed-footer" style="height: 70% !important; background: #003f72;">
+        <p class="center-align" style="font-family: 'Roboto Condensed', sans-serif; color:#eaab00; font-size: 16px;">
+            Reporte de Conflictos</p>
+        <div class="divider"></div>
+        <div class="container" style="background-image: url('/observatorio/img/ciudad_perdida2.jpg');
+                 background-repeat: no-repeat; background-size: 100% 100%; opacity:0.9; width:100%;">
+            <div class="section">
+                <form action="/observatorio/guardar_reporte_comunidad" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" id="codigo" name="codigo" th:value="${''}"/>
+                    <div class="row" style="color:cyan;">
+                        <div class="input-field col s12 m12 l12">
+                            <input id="nombre" name="nombre" type="text" class="validate" required="true"/>
+                            <label for="nombre" style="color:cyan;">Nombres Completos *</label>
+                        </div>
+                        <div class="input-field col s12 m12 l12">
+                            <input id="correo" name="correo" type="email" class="validate" required="true"/>
+                            <label for="correo" style="color:cyan;">Email *</label>
+                        </div>
+                        <div class="input-field col s12 m12 l12">
+                            <input id="telefono" name="telefono" type="text" class="validate"/>
+                            <label for="telefono" style="color:cyan;">Teléfono</label>
+                        </div>
+                        <div class="input-field col s12 m12 l12">
+                            <textarea id="descripcion" name="descripcion" class="materialize-textarea"
+                                      required="true"></textarea>
+                            <label for="descripcion" style="color:cyan;">Describa el conflicto *</label>
+                        </div>
+                        <div class="file-field input-field col s12 m12 l12">
+                            <div class="btn">
+                                <span style="color:cyan;">Archivo</span>
+                                <input type="file" id="adjunto" name="adjunto"/>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn waves-effect waves-light" style="background-color:steelblue;" type="submit"
+                                name="action">Reportar
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <span th:if="${mensaje != null}">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                var mensaje = /*[[${mensaje}]]*/
+                    notificar('glyphicon glyphicon-user', 'Login', mensaje, 'pastel-danger');
+                /*]]>*/
+            </script>
+        </span>
+    <!--Autenticar-->
+    <div id="modal_autenticar" class="modal modal-fixed-footer"
+         style="background: #003f72; border-radius:  20px 20px; opacity: 0.7;">
+        <p class="center-align" style="font-family: 'Roboto Condensed', sans-serif; color:#eaab00; font-size: 16px;">
+            <i class="material-icons">info</i>&nbsp;<span
+                style="font-family: 'Roboto Condensed', sans-serif; color:white; font-size: 16px;">Utilice sus credenciales del correo institucional.</span>
+        </p>
+        <div class="divider"></div>
+        <div style="background-repeat: no-repeat;  opacity:0.9; width: 100%;">
+            <div class="section"></div>
+            <main>
+                <center>
+                    <div class="container">
+                        <div class="z-depth-1 grey lighten-4 row"
+                             style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                            <form class="col s12" action="/observatorio/auth" method="post">
+                                <input type="hidden" id="codigo" name="codigo" th:value="${''}"/>
+                                <div class='row'>
+                                    <div class='col s12'>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='input-field col s12'>
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <input class='validate' type='text' name='username' id='username' value=""
+                                               autocomplete="true" required="required" autofocus="autofocus"/>
+                                        <label for='email'>Ingrese su usuario</label>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='input-field col s12'>
+                                        <i class="material-icons prefix">lock</i>
+                                        <input class='validate' type='password' name='password' id='password'
+                                               required="required" value=""/>
+                                        <label for='password'>Ingrese su clave</label>
+                                    </div>
+                                    <!--                                        <label style='float: right;'>
+                                                                                <a class='pink-text' href='#!'><b>Forgot Password?</b></a>
+                                                                            </label>-->
+                                </div>
+
+                                <br/>
+                                <center>
+                                    <div class='row'>
+                                        <button type='submit' name='btn_login'
+                                                class='col s12 btn btn-large waves-effect indigo'>Login
+                                        </button>
+                                    </div>
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                    <!--<a href="#!">Create account</a>-->
+                </center>
+            </main>
+
+            <!--                <div class="container">
+                                <div class="section">
+                                    <div class="pull-right"><img th:src="@{/img/user-profile.png}" class="circle responsive-img" alt="User Image" style="width: 60px; padding-top: -5px;"/> </div>
+                                    <div class="pull-right">
+                                        <i class="material-icons">info</i>&nbsp;<span style="font-family: 'Roboto Condensed', sans-serif; color:white; font-size: 16px;">Utilice sus credenciales del correo institucional.</span>
+                                    </div>
+                                    <br/>
+                                    <form id="loginform" class="form-horizontal" role="form" action="/observatorio/auth" method="POST">
+                                        <input type="hidden" id="codigo" name="codigo" th:value="${observatorio.codigo}"/>
+                                        <div class="row" style="color:cyan;">
+                                            <div class="row">
+                                            <div class="input-field col s12 m12 l12">
+                                                <i class="material-icons prefix">account_circle</i>
+                                                <input id="username" type="text" class="validate" name="username"  autocomplete="true" required="required" value="rsguayax" autofocus="autofocus" />
+                                                <label for="username" style="color:cyan;">Username</label>
+                                            </div>
+                                            <div class="input-field col s12 m12 l12">
+                                                <i class="material-icons prefix">lock</i>
+                                                <input id="password" type="password" class="validate" name="password" value="Smartland2018" required="true" />
+                                                <label for="password" style="color:cyan;">Password</label>
+                                            </div>
+
+                                            <div class="pull-right">
+                                                <button class="btn waves-effect waves-light" style="background-color:steelblue;" type="submit" name="action">Ingresar
+                                                    <i class="material-icons right">send</i>
+                                                </button>
+                                            </div>
+
+                                            <span th:if="${mensaje != null}">
+                                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <p style="font-size: 12px; padding-right: 15px;" th:text="${mensaje}"></p>
+                                                </div>
+                                            </span>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>-->
+        </div>
+    </div>
+    <!-- Modal Visualizar -->
+    <div class="modal fade" id="mdl_modal" tabindex="1" role="dialog" aria-labelledby="mdl_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="text-center" style="padding-top: -5px;">
+                        <strong>
+                            <div class="modal-title" id="mdl_label"></div>
+                        </strong>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow:scroll; height: 500px;">
+                    <div class="row table-responsive" id="mdl_body"
+                         style="padding-left: 40px; padding-right: 40px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+</html>

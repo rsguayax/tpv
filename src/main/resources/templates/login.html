@@ -1,188 +1,509 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>DataPlus++</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<body class="marca_agua">
-<!--<th:block th:include="fragments/header :: header"></th:block>-->
-<div class="row">
-    <div class="col m4 s12"></div>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="/img/icono.png" type="image/png"/>
 
-    <div class="col m4 s12">
-        <section class="eternity-form">
-            <div class="login-content">
-                <form th:action="@{/login}" method="post">
+    <meta name="description" content="Sistema de Gestión Contable"/>
+    <meta name="keywords" content="contabilidad, inventario, clientes, proveedores, reportes"/>
 
-                    <div class="section-title">
-                        <div class="pull-left"><img src="img/user-profile.png" class="img-circle" alt="User Image" style="width: 50px; padding-top: -5px;"/> </div>
-                        <div class="panel-title text-center"><h5 style="color:#004370;">Ingreso al Sistema </h5></div>
-                        <br/>
-                        <i class="material-icons">info</i>&nbsp;Use usuario y clave institucional
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="LarisaPlus"/>
+    <meta property="og:url" content="https://larisaplus.com"/>
+    <meta property="og:title" content="Sistema de Gestión Contable"/>
+    <meta property="og:image" content="https://larisaplus.com"/>
+    <meta property="og:description" content="Sistema de Gestión Contable Empresarial"/>
+
+    <meta name="twitter:card" content="resource"/>
+    <meta name="twitter:site" content="@larisa"/>
+    <meta name="twitter:url" content="/"/>
+    <meta name="twitter:title" content="SSistema de Gestión Contable"/>
+    <meta name="twitter:description" content="Sistema de Gestión Contable Empresarial"/>
+    <meta name="twitter:image" content="https://larisaplus.com"/>
+
+    <title>Larisa Plus++</title>
+
+    <link rel="stylesheet" th:href="@{/notify/animate.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/notify/bootstrap-notify.min.js}"></script>
+    <script th:src="@{/js/util.js}"></script>
+
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Old+Standard+TT:400,700);
+
+        [data-notify="container"][class*="alert-pastel-"] {
+            background-color: rgb(255, 255, 238);
+            border-width: 0px;
+            border-left: 15px solid rgb(255, 240, 106);
+            border-radius: 0px;
+            box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.3);
+            font-family: 'Old Standard TT', serif;
+            letter-spacing: 1px;
+        }
+
+        [data-notify="container"].alert-pastel-info {
+            border-left-color: rgb(255, 179, 40);
+        }
+
+        [data-notify="container"].alert-pastel-danger {
+            border-left-color: rgb(255, 103, 76);
+        }
+
+        [data-notify="container"][class*="alert-pastel-"] > [data-notify="title"] {
+            color: rgb(80, 80, 57);
+            display: block;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        [data-notify="container"][class*="alert-pastel-"] > [data-notify="message"] {
+            font-weight: 400;
+        }
+    </style>
+    <style>
+        .fondo {
+            background: linear-gradient(145deg, #4772d9, #5be0e0);
+            background-color: rgba(0, 0, 0, 0);
+            background-position-x: 0%;
+            background-position-y: 0%;
+            background-repeat: repeat;
+            background-attachment: scroll;
+            background-image: linear-gradient(145deg, rgb(71, 114, 217), rgb(91, 224, 224));
+            background-size: auto;
+            background-origin: padding-box;
+            background-clip: border-box;
+        }
+    </style>
+
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <style>
+        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+        .login-block {
+            background: #ffffff; /* fallback for old browsers */
+            /*background: -webkit-linear-gradient(to bottom, #ffffff, #ffffff);*/ /* Chrome 10-25, Safari 5.1-6 */
+            /*background: linear-gradient(to bottom, #ffffff, #ffffff);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            float: left;
+            width: 100%;
+            padding: 50px 0;
+        }
+
+        .banner-sec {
+            background: url(/img/lavadora.jpg) no-repeat left bottom;
+            background-size: cover;
+            min-height: 500px;
+            border-radius: 0 10px 10px 0;
+            padding: 0;
+        }
+
+        /*.container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}*/
+        .carousel-inner {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .carousel-caption {
+            text-align: left;
+            left: 5%;
+        }
+
+        .login-sec {
+            padding: 50px 30px;
+            position: relative;
+        }
+
+        .login-sec .copy-text {
+            position: absolute;
+            width: 80%;
+            bottom: 20px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .login-sec .copy-text i {
+            color: #FEB58A;
+        }
+
+        .login-sec .copy-text a {
+            color: #E36262;
+        }
+
+        .login-sec h2 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            font-size: 30px;
+            color: #DE6262;
+        }
+
+        .login-sec h2:after {
+            content: " ";
+            width: 100px;
+            height: 5px;
+            background: #FEB58A;
+            display: block;
+            margin-top: 20px;
+            border-radius: 3px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .btn-login {
+            background: #DE6262;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .banner-text {
+            width: 70%;
+            position: absolute;
+            bottom: 40px;
+            padding-left: 20px;
+        }
+
+        .banner-text h2 {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .banner-text h2:after {
+            content: " ";
+            width: 100px;
+            height: 5px;
+            background: #FFF;
+            display: block;
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+
+        .banner-text p {
+            color: #fff;
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            color: #6a6f8c;
+            background: #c8c8c8;
+            font: 600 16px/18px 'Open Sans', sans-serif;
+        }
+
+        *, :after, :before {
+            box-sizing: border-box
+        }
+
+        .clearfix:after, .clearfix:before {
+            content: '';
+            display: table
+        }
+
+        .clearfix:after {
+            clear: both;
+            display: block
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .login-wrap {
+            width: 100%;
+            margin: auto;
+            max-width: 525px;
+            min-height: 670px;
+            position: relative;
+            background: url() no-repeat center;
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+        }
+
+        .login-html {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            padding: 90px 70px 50px 70px;
+            background: rgba(40, 57, 101, .9);
+        }
+
+        .login-html .sign-in-htm,
+        .login-html .sign-up-htm {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            transition: all .4s linear;
+        }
+
+        .login-html .sign-in,
+        .login-html .sign-up,
+        .login-form .group .check {
+            display: none;
+        }
+
+        .login-html .tab,
+        .login-form .group .label,
+        .login-form .group .button {
+            text-transform: uppercase;
+        }
+
+        .login-html .tab {
+            font-size: 22px;
+            margin-right: 15px;
+            padding-bottom: 5px;
+            margin: 0 15px 10px 0;
+            display: inline-block;
+            border-bottom: 2px solid transparent;
+        }
+
+        .login-html .sign-in:checked + .tab,
+        .login-html .sign-up:checked + .tab {
+            color: #fff;
+            border-color: #1161ee;
+        }
+
+        .login-form {
+            min-height: 345px;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .login-form .group {
+            margin-bottom: 15px;
+        }
+
+        .login-form .group .label,
+        .login-form .group .input,
+        .login-form .group .button {
+            width: 100%;
+            color: #fff;
+            display: block;
+        }
+
+        .login-form .group .input,
+        .login-form .group .button {
+            border: none;
+            padding: 15px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, .1);
+        }
+
+        .login-form .group input[data-type="password"] {
+            text-security: circle;
+            -webkit-text-security: circle;
+        }
+
+        .login-form .group .label {
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        .login-form .group .button {
+            background: #1161ee;
+        }
+
+        .login-form .group label .icon {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+            position: relative;
+            display: inline-block;
+            background: rgba(255, 255, 255, .1);
+        }
+
+        .login-form .group label .icon:before,
+        .login-form .group label .icon:after {
+            content: '';
+            width: 10px;
+            height: 2px;
+            background: #fff;
+            position: absolute;
+            transition: all .2s ease-in-out 0s;
+        }
+
+        .login-form .group label .icon:before {
+            left: 3px;
+            width: 5px;
+            bottom: 6px;
+            transform: scale(0) rotate(0);
+        }
+
+        .login-form .group label .icon:after {
+            top: 6px;
+            right: 0;
+            transform: scale(0) rotate(0);
+        }
+
+        .login-form .group .check:checked + label {
+            color: #fff;
+        }
+
+        .login-form .group .check:checked + label .icon {
+            background: #1161ee;
+        }
+
+        .login-form .group .check:checked + label .icon:before {
+            transform: scale(1) rotate(45deg);
+        }
+
+        .login-form .group .check:checked + label .icon:after {
+            transform: scale(1) rotate(-45deg);
+        }
+
+        .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm {
+            transform: rotate(0);
+        }
+
+        .login-html .sign-up:checked + .tab + .login-form .sign-up-htm {
+            transform: rotate(0);
+        }
+
+        .hr {
+            height: 2px;
+            margin: 30px 0 20px 0;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        .foot-lnk {
+            text-align: center;
+        }
+    </style>
+</head>
+<!------ Include the above in your HEAD tag ---------->
+<body>
+<section class="login-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="login-html">
+                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
+                                                                                             class="tab">Sign
+                    In</label>
+                    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign
+                    Up</label>
+                    <div class="login-form">
+                        <form role="form" th:action="@{/login}" method="post">
+                            <div class="sign-in-htm">
+                                <div class="group">
+                                    <label for="username" class="label">Username</label>
+                                    <input id="username" type="text" class="input" name="username" autocomplete="true"
+                                           required="required" placeholder="username" autofocus="autofocus"/>
+
+                                </div>
+                                <div class="group">
+                                    <label for="password" class="label">Password</label>
+                                    <input id="password" type="password" class="input" name="password"
+                                           placeholder="password"/>
+                                </div>
+                                <div class="group">
+                                    <input id="check" type="checkbox" class="check" checked>
+                                    <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                                </div>
+                                <div class="group">
+                                    <input type="submit" class="button" value="Sign In">
+                                </div>
+                                <div class="hr"></div>
+                                <div class="foot-lnk">
+                                    <a href="#forgot">Forgot Password?</a>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                    <div class="textbox-wrap">
-                        <div class="input-group">
-                                <span class="input-group-addon ">
-                                    <i class="material-icons">account_circle</i>
-                                </span>
-                            <input type="text" id="username" name="username" required="required" class="form-control" placeholder="Username." autocomplete="true" autofocus="autofocus" />
+
+                    <!--<div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label">Username</label>
+                            <input id="user" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Repeat Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Email Address</label>
+                            <input id="pass" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Sign Up">
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Already Member?</a>
+                        </div>
+                    </div>-->
+                </div>
+
+            </div>
+
+            <div class="col-md-8 banner-sec">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+
+                            <img class="d-block img-fluid" th:src="@{/img/portada.jpg}"
+                                 alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>This is Heaven</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid"
+                                 th:src="@{/img/portada.jpg}"
+                                 alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>This is Heaven</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block img-fluid"
+                                 th:src="@{/img/portada.jpg}"
+                                 alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>This is Heaven</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                        nostrud exercitation</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="textbox-wrap">
-                        <div class="input-group">
-                                <span class="input-group-addon ">
-                                    <i class="material-icons">lock</i>
-                                </span>
-                            <input id="password" name="password" type="password" required="required" class="form-control" placeholder="Clave" />
-                        </div>
-                    </div>
-                    <div class="login-form-action clearfix">
-                        <button type="submit" class="btn btn-primary pull-right" style="background-color: #004370; color:white;">Ingresar &nbsp; <i class="material-icons">arrow_forward</i> </button>
-                    </div>
-                </form>
+
+                </div>
             </div>
-            <div th:if="${param.error}" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <!--<span th:text="${mensaje}"></span>-->
-                <!--<span>Usuario o clave inválidos</span>-->
-                <span th:text="${param.error}"></span>
-            </div>
-            <!--                    <div th:if="${mensaje != null}" class="alert alert-info alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <span th:text="${mensaje}"></span>
-                                    <span th:text="${mensaje}"></span>
-                                </div>-->
-        </section>
+        </div>
     </div>
-    <div class="col m4 s12"></div>
-</div>
-
-
-<!--<th:block th:include="fragments/footer :: footer"></th:block>-->
-
-
-<div id="mdl_registro" class="modal" style="height: 50%; width: 60%;">
-    <form method="POST" th:action="@{/register}">
-        <div class="modal-content">
-            <h4>Registrarse al sistema</h4>
-            <div class="row">
-                <span class="text-muted">si es la primera vez que ingresa, debe realizar este proceso</span>
-
-                <div class="textbox-wrap">
-                    <div class="input-group">
-                            <span class="input-group-addon ">
-                                <i class="material-icons">account_circle</i>
-                            </span>
-                        <input type="text" id="usuario" name="usuario" required="required" class="form-control" placeholder="ingrese usuario o correo UTPL" autocomplete="true" autofocus="autofocus" />
-                    </div>
-                </div>
-                <div class="textbox-wrap">
-                    <div class="input-group">
-                            <span class="input-group-addon ">
-                                <i class="material-icons">lock</i>
-                            </span>
-                        <input id="clave" name="clave" type="password" required="required" class="form-control" placeholder="Ingrese clave institucional." />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="modal-close waves-effect waves-green btn center-block blue">Validar Usuario</button>
-        </div>
-    </form>
-</div>
-
-<!--<th:block th:include="fragments/footer :: footer"></th:block>-->
-<script type="text/javascript">
-    $(function () {
-        $("input").iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            increaseArea: '20%' // optional
-        });
-        $(".dark input").iCheck({
-            checkboxClass: 'icheckbox_polaris',
-            increaseArea: '20%' // optional
-        });
-        $(".form-control").focus(function () {
-            $(this).closest(".textbox-wrap").addClass("focused");
-        }).blur(function () {
-            $(this).closest(".textbox-wrap").removeClass("focused");
-        });
-
-        //On Scroll Animations
-
-        // <![CDATA[
-        if ($(window).width() >= 968 && !Modernizr.touch && Modernizr.cssanimations) {
-
-            $("body").addClass("scroll-animations-activated");
-            $('[data-animation-delay]').each(function () {
-                var animationDelay = $(this).data("animation-delay");
-                $(this).css({
-                    "-webkit-animation-delay": animationDelay,
-                    "-moz-animation-delay": animationDelay,
-                    "-o-animation-delay": animationDelay,
-                    "-ms-animation-delay": animationDelay,
-                    "animation-delay": animationDelay
-                });
-
-            });
-            $('[data-animation]').waypoint(function (direction) {
-                if (direction == "down") {
-                    $(this).addClass("animated " + $(this).data("animation"));
-
-                }
-            }, {
-                offset: '90%'
-            }).waypoint(function (direction) {
-                if (direction == "up") {
-                    $(this).removeClass("animated " + $(this).data("animation"));
-
-                }
-            }, {
-                offset: $(window).height() + 1
-            });
-        }
-        // ]]>
-        //End On Scroll Animations
-
-
-        $(".main-nav a[href]").click(function () {
-            var scrollElm = $(this).attr("href");
-
-            $("html,body").animate({scrollTop: $(scrollElm).offset().top}, 500);
-
-            $(".main-nav a[href]").removeClass("active");
-            $(this).addClass("active");
-        });
-
-        // <![CDATA[
-        if ($(window).width() > 1000 && !Modernizr.touch) {
-            var options = {
-                $menu: ".main-nav",
-                menuSelector: 'a',
-                panelSelector: 'section',
-                namespace: '.panelSnap',
-                onSnapStart: function () { },
-                onSnapFinish: function ($target) {
-                    $target.find('input:first').focus();
-                },
-                directionThreshold: 50,
-                slideSpeed: 200
-            };
-            //$('body').panelSnap(options);
-
-        }
-        // ]]>
-
-        $(".colorBg a[href]").click(function () {
-            var scrollElm = $(this).attr("href");
-            $("html,body").animate({scrollTop: $(scrollElm).offset().top}, 500);
-            return false;
-        });
-    });
-</script>
+</section>
 
 </body>
 </html>

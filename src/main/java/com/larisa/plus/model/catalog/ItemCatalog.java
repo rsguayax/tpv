@@ -18,12 +18,7 @@ public class ItemCatalog extends BaseEntity {
     private boolean status;
     private Date register;
 
-    public ItemCatalog(String name, String description, Catalog catalog, boolean status, Date register) {
-        this.name = name;
-        this.description = description;
-        this.catalog = catalog;
-        this.status = status;
-        this.register = register;
+    public ItemCatalog() {
     }
 
     public String getName() {

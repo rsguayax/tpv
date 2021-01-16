@@ -12,10 +12,7 @@ public class Country extends BaseEntity {
     private String description;
     private Date register;
 
-    public Country(String name, String description, Date register) {
-        this.name = name;
-        this.description = description;
-        this.register = register;
+    public Country() {
     }
 
     public String getName() {

@@ -20,13 +20,7 @@ public class City extends BaseEntity {
     private String lng;
     private Date register;
 
-    public City(Country country, String name, String description, String lat, String lng, Date register) {
-        this.country = country;
-        this.name = name;
-        this.description = description;
-        this.lat = lat;
-        this.lng = lng;
-        this.register = register;
+    public City() {
     }
 
     public Country getCountry() {

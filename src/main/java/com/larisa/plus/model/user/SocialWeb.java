@@ -16,14 +16,7 @@ public class SocialWeb extends BaseEntity {
     private String other;
     private Date register;
 
-    public SocialWeb(String webSite, String twitter, String youtube, String facebook, String instagram, String other, Date register) {
-        this.webSite = webSite;
-        this.twitter = twitter;
-        this.youtube = youtube;
-        this.facebook = facebook;
-        this.instagram = instagram;
-        this.other = other;
-        this.register = register;
+    public SocialWeb() {
     }
 
     public String getWebSite() {

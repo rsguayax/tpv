@@ -1,0 +1,172 @@
+<section th:fragment="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="row">
+                <div class="col s3 m3 tooltipped" data-balloon-length="medium"  data-tooltip="Grupo de Investigación Sistemas Basados en el Conocimiento" data-balloon-pos="right">
+                    <img th:src="@{/img/kbs.png}"  style="height: 63px; " />
+                </div>
+                <div class="col s9 m9">
+                    <br/>
+                    <p>Copyright 2020 Sistema de Planes Docentes. All rights reserved. <a href="https://twitter.com/rsguayax" target="_blank">@rsguayax</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/modernizr.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/jquery-1.11.2.js}" ></script>-->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/moment.js}"  ></script>
+    <script type="text/javascript" th:src="@{/js/twix.js}" ></script>
+    <!--    <script type="text/javascript" src="https:////code.jquery.com/jquery-1.12.3.js"></script>-->
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+
+    <!--<script th:src="@{/DataTables/datatables.min.js}"></script>-->
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+
+    <!--<script src="https://cdn.datatables.net/1.10.20/js/dataTables.material.min.js"></script>-->
+
+
+
+    <!--    <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script language="JavaScript" type="text/javascript" th:src="@{/js/dataTables.buttons.min.js}"></script>-->
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!--    <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>-->
+
+    <script src="https://cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/util.js}"></script>
+
+    <script>
+        function mueveReloj() {
+            momentoActual = new Date()
+            hora = momentoActual.getHours()
+            minuto = momentoActual.getMinutes()
+            segundo = momentoActual.getSeconds()
+            horaImprimible = hora + " : " + minuto + " : " + segundo
+            $('#reloj').html(formatearFechaConDiaYMes(momentoActual) + ' - ' + horaImprimible);
+            setTimeout("mueveReloj()", 1000)
+        }
+        momentoActual = new Date();
+        $('#reloj').html(formatearFechaConDiaYMes(momentoActual));
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabs();
+            $('select').formSelect();
+            $('.sidenav').sidenav();
+            $('.tap-target').tapTarget();
+            $('.tooltipped').tooltip();
+            $('.modal').modal();
+            $('.datepicker').datepicker();
+            //$('.datepicker').datepicker('format', 'yyyy,mm,dd');
+            $('.collapsible').collapsible();
+            $('#content').pushpin({
+                top: $('#content').offset().top
+            });
+            $('.scrollspy').scrollSpy({
+                scrollOfffset: 0
+            });
+
+            //        tinymce.init({
+//            selector: 'texto', // change this value according to your HTML
+//        });
+
+            //inicializar_texts_area('textarea'); //#importancia
+            //$('input.timepicker').timepicker({});
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '7',
+                maxTime: '9:00pm',
+                //defaultTime: '07',
+                startTime: '07:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+
+            //$( ".daatepickerui" ).datepicker();
+
+            $('.scrollspy').scrollSpy();
+        });
+        function inicializar_texts_area(elemento){
+            tinymce.remove(elemento)
+            tinyMCE.init({
+                selector: elemento, //'textarea',//'#idtextarea',
+
+                plugins: "lists, link, paste, visualchars",//para eliminar el formato solo al pegar
+                paste_as_text: true,//para eliminar el formato solo al pegar
+
+                toolbar: 'numlist bullist insertfile undo redo',// sizeselect  bold italic  fontselect  fontsize fontsizeselect',
+                lists_indent_on_tab: true,
+                fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+
+                height: "110",
+                valid_elements : "-ul,-li",
+                //menubar: false,
+                setup: function (editor) {
+                    /*editor.on("init", function() {
+                        //editor.execCommand('InsertUnorderedList');//InsertOrderedList // InsertDefinitionList
+                        if(editor.getContent({format:'text'}) == '') {
+                            editor.execCommand('InsertUnorderedList');
+                        }
+                    });*/
+                    // This forces all 'enter' and 'backspace' keys to create an 'ol li' element
+                    editor.on('keyup', function(e) {
+                        var nombre = editor.getElement().getAttribute('name');
+                        var contenido = tinyMCE.get(nombre).getContent({format: 'text'});
+                        if(nombre.match('pre_requisitos')){
+                            $('#pre_requisitostext').val( contenido );
+                        }
+                        if(nombre.match('importancia')){
+                            $('#importanciatext').val( contenido );
+                        }
+                        if(nombre.match('curriculo')){
+                            $('#curriculotext').val( contenido );
+                        }
+                        if(nombre.match('bibliografia_descripcion')){
+                            $('#'+nombre + '_text').val( contenido );
+                        }
+                        if(nombre.match('actividad_descripcion')){
+                            $('#'+nombre + '_text').val( contenido );
+                        }
+                        //if (e.keyCode == 13 || e.keyCode == 8){
+                        if (editor.selection.getNode().nodeName.toLowerCase() != 'li'){
+                            //editor.execCommand('InsertUnorderedList');//InsertOrderedList //InsertDefinitionList
+                            editor.execCommand('InsertUnorderedList');
+                        }
+                        //}
+                    });
+                },
+                entity_encoding : "raw",
+                indentation: '20pt',
+//            mode: "textareas",
+                branding: false
+            });
+        }
+    </script>
+
+    <script th:src="@{/js/respond.src.js}"></script>
+    <script th:src="@{/js/jquery.icheck.js}"></script>
+    <script th:src="@{/js/placeholders.min.js}"></script>
+    <script th:src="@{/js/waypoints.min.js}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <!--<script th:src="@{/js/jquery.panelSnap.js}"></script>-->
+
+</section>

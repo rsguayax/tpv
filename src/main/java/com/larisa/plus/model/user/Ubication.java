@@ -23,9 +23,7 @@ public class Ubication extends BaseEntity {
     private double lng;
     private Date register;
 
-    public Ubication(City city, String sector) {
-        this.city = city;
-        this.sector = sector;
+    public Ubication() {
     }
 
     public City getCity() {
