@@ -4,6 +4,7 @@ import com.larisa.plus.model.config.BaseEntity;
 import com.larisa.plus.model.user.User;
 import com.larisa.plus.model.catalog.ItemCatalog;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,6 +41,10 @@ public class Article extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "category")
     private ItemCatalog category;
+
+    @ManyToOne
+    @JoinColumn(name = "status")
+    private ItemCatalog status;
 
     private Date register;
 
@@ -100,6 +105,14 @@ public class Article extends BaseEntity {
 
     public void setCategory(ItemCatalog category) {
         this.category = category;
+    }
+
+    public ItemCatalog getStatus() {
+        return status;
+    }
+
+    public void setStatus(ItemCatalog status) {
+        this.status = status;
     }
 
     public Date getRegister() {

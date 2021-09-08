@@ -21,6 +21,8 @@ public class User extends BaseEntity {
     private String telephone;
     private String cellphone;
 
+    private String token;
+
     @OneToOne
     @JoinColumn(name = "ubication")
     //@JsonBackReference
@@ -36,14 +38,14 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(String name, String lastName, String email, String username, String password, String photo){
+    /*public User(String name, String lastName, String email, String username, String password, String photo){
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
         this.setPhoto(photo);
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -147,5 +149,13 @@ public class User extends BaseEntity {
 
     public void setSocialWeb(SocialWeb socialWeb) {
         this.socialWeb = socialWeb;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

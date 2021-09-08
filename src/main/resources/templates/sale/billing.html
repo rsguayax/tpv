@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<div class="container" style="">
+    <div class="row" style="margin-top: 50px; margin-left:-40px;">
+        <div class="col s12 m12">
+            <div class="label"
+                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                Facturación.
+            </div>
+
+            <table id="datos" class="responsive-table" style="line-height: 1px; width: 100%;">
+                <tbody>
+                <tr class="" style="">
+                    <td style="">Cliente:</td>
+                    <td colspan="3" class="" style="padding-bottom:1px;">
+                        <input type="hidden" id="client_id" name="client_id" value="-1">
+                        <input type="text" id="client" name="client" class="autocomplete"
+                               placeholder="Ingresese nro. de identificación o nombres"
+                               style="height:30px; width:80%; font-weight: bold; background-color: #F5F8FA; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 10px;"
+                               required="true"/>
+                        <a href="../client/edit/" onclick="location.href=this.href + $('#client_id').val();return false;" class="btn btn-floating btn-small red tooltipped modal-trigger"
+                           data-tooltip="Cliente" data-position="left"> <i
+                                class="material-icons">edit</i> </a>
+                    </td>
+                </tr>
+                <tr style="">
+                    <td style="width: 15%;">Identificación:</td>
+                    <td style="width: 35%; opacity: 0.5;"><span id="identifier" class="text-muted"></span></td>
+                    <td style="width: 15%;">Dirección:</td>
+                    <td style="width: 35%; opacity: 0.5;"><span id="direction"></span></td>
+                </tr>
+                <tr>
+                    <td>Correo:</td>
+                    <td style="opacity: 0.5;"><span id="email"></span></td>
+                    <td>Teléfono:</td>
+                    <td style="opacity: 0.5;"><span id="telephone"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 m6  input-icons" style="margin-right: -20px;">
+        <i class="fa fa-tags fa-lg" aria-hidden="true" style="z-index:1000"></i>
+        <input type="text" id="search_ps" name="search_ps" class="input-field autocomplete validate "
+               placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
+               style="background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+               required="true" autofocus="true"/>
+    </div>
+
+    <div class="col s12 m6" style="margin-left: 20px;">
+        <span style="margin-left: 20px; padding: 5px;font-size:30px;">
+            Total a Pagar: $ <span id="total_a_pagar">0</span>
+        </span>
+        <span class="right-align"
+              style="border-right: 15px solid white; color:white; padding: 10px; background-color: cornflowerblue; border-right: lavenderblush 1px; border: solid 0px blue; border-radius: 0px 0px 0px 25px;">
+                        IVA: $ <span id="iva_general">0</span>
+                    </span>
+
+        <span class="right-align"
+              style="color:white; padding: 10px; background-color: blue; border: solid 0px blue; border-radius: 0px 25px 0px 0px;">
+                        Subtotal: $ <span id="subtotal_general">0</span>
+                    </span>
+        <br/><br/>
+        <div class="divider" style="margin-left: 20px; margin-top: -14px;"></div>
+        <p id="total_text" class="" style=""></p>
+    </div>
+</div>
+<div class="row" style="margin: -20px 20px 20px 20px;">
+    <div class="col s12 m12">
+        <table id="factura" class="responsive-table striped" style="display:none;line-height: 1px; width: 100%;">
+            <thead>
+            <tr>
+                <th style="width: 5%;"></th>
+                <th style="width: 45%;">Producto/Servicio</th>
+                <th style="width: 10%;">Medida</th>
+                <th style="width: 10%;">Cantidad</th>
+                <th style="width: 10%;">P. unitario</th>
+                <th style="width: 10%;">IVA</th>
+                <th style="width: 10%;">P. total</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+    function calculate_total(elemento) {
+        quantity = $(elemento).parent().parent().find("td:eq(3)").find("#quantity").val()
+        price_unit = $(elemento).parent().parent().find("td:eq(4)").find("#priceu").text()
+        //total price
+        total_price = $(elemento).parent().parent().find("td:eq(6)").find("span")
+        total_price.text((quantity * price_unit).toFixed(2))
+
+        iva = $(elemento).parent().parent().find("td:eq(5)").find("span")
+        iva.text((total_price.text() * 0.12).toFixed(2))
+        console.log("IVA: " + iva.text())
+
+        sumar_totales(elemento)
+    }
+
+    $(document).ready(function () {
+        //$(document).bind("contextmenu",function(e){
+        //    return false;
+        //});
+
+        $("#search_ps").focus();
+
+        $("#quantity").keypress(function () {
+            alert("Handler for .keypress() called.");
+        });
+
+        $('#quantity').on('keypress', function () {
+            //var elemento = $(this).parent().parent().find("td:eq(1)").find("div").find("select").val();
+            console.log('ingreso a método change')
+
+        })
+
+        $('#client').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/client/search/' + request.query,
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        console.log(JSON.stringify(data))
+                        response.call(this, $.map(data, function (item) {
+                            return {
+                                label: item.user_enterprise.name + ' ' + item.user_enterprise.lastName,
+                                value: item.id
+                                //text: item.interno
+                            };
+                        }));
+                        $('#client_id').val(-1)
+                        $('#identifier').text('')
+                        $('#telephone').text('')
+                        $('#email').text('')
+                        $('#direction').text('')
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                console.log(ui.data('value'));
+                var client = callWS('/larisa/api/v1/client/' + ui.data('value'))
+                $('#client_id').val(client.id)
+                console.log(JSON.stringify(client))
+                $('#identifier').text(client.user_enterprise.identifier)
+                if (client.user_enterprise.ubication != null) {
+                    //$('#direction').text(client.user_enterprise.ubication.mainStreet + ' ' + client.user_enterprise.ubication.houseNumber + ' y ' + client.user_enterprise.ubication.secondaryStreet)
+                    $('#direction').text(client.user_enterprise.ubication.parroquia.name + ', ' + client.user_enterprise.ubication.description)
+                    telephone = ''
+                    if (client.user_enterprise.cellphone != null)
+                        telephone = client.user_enterprise.cellphone
+                    if (client.user_enterprise.telephone != null) {
+                        if (telephone != '')
+                            telephone += ' - '
+                        telephone += client.user_enterprise.telephone;
+                    }
+                    $('#telephone').text(telephone)
+                    $('#email').text(client.user_enterprise.email)
+                }
+                $("#search_ps").focus()
+            }
+        });
+
+        $('#search_ps').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            forceSelection: true,
+            context: this,
+            autoFocus: true,
+            //delay: 100,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/article/search/' + request.query + '/1',
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        $('#search_ps').val('')
+                        console.log(JSON.stringify(data))
+
+                        if (data.length == 1) {
+                            select_product(data[0].code, data[0].name, data[0].measure.name, data[0].id, data[0].sale_price)
+                        } else {
+                            response.call(this, $.map(data, function (item) {
+                                return {
+                                    label: item.name + ' ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
+                                    value: item.id,
+                                    name: item.name,
+                                    measure: item.measure.name,
+                                    price: item.sale_price,
+                                    code: item.code
+                                };
+                            }));
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                console.log("select")
+                console.log(ui.data())
+                select_product(ui.data('code'), ui.data('name'), ui.data('measure'), ui.data('value'), ui.data('price'));
+            }
+        });
+    });
+
+    function select_product(code, name, unit, value, price) {
+        console.log('name: ' + name, ', code: '+ code + ', unit: ' + unit, ', value: ' + value, ', price: ' + price)
+        quantity = 1
+        existe = false
+        $(".registro").each(function (i) {
+            console.log("CODE: " + $(this).find('td:eq(0)').find('#code').val() + " == " + code)
+            console.log("PRICE: " + $(this).find('td:eq(3)').find('#priceu').val() + " == " + (price / 1.12).toFixed(2))
+            if ($(this).find('td:eq(0)').find('#code').val() == code && $(this).find('td:eq(4)').find('#priceu').text() == (price / 1.12).toFixed(2)) {
+                quantity_add = parseInt($(this).find("td:eq(3)").find("#quantity").val()) + 1
+                $(this).find("td:eq(3)").find("#quantity").val(quantity_add)
+                existe = true
+                calculate_total($(this).find("td:eq(3)").find("#quantity"))
+            }
+        })
+        if (existe == false) {
+            var item = '<tr style="background-color: cornsilk;" class="registro blink right-align">' +
+                '                    <td style="padding-bottom:1px;"><a data-balloon-length="medium"' +
+                '                                                                       data-tooltip="Eliminar item"' +
+                '                                                                       data-balloon-pos="left" class="" ' +
+                '                                                       style="margin-top:5px;cursor:pointer;" onclick="eliminar_item( this )" ><span style="margin-top:-10px;"><i class="material-icons">delete_forever</i></span></a>' +
+                '                        <input type="hidden" name="id_ps" id="id_ps" value="' + value + '"/>' +
+                '                        <input type="hidden" name="code" id="code" value="' + code + '"/>' +
+                '                    </td>' +
+                '                    <td class="">' +
+                '                        <a href="../article/edit/'+ code + '" target="_blank">' + name + '</a>' +
+                '                    </td>' +
+                '                    <td>' +
+                '                        <span>' + unit + '</span>' +
+                '                    </td>' +
+                '                    <td style="padding-bottom:1px;">' +
+                '                        <input type="number"  onchange="calculate_total(this);" onkeyup="calculate_total(this);" id="quantity" name="quantity" value="1" style="width: 50%; height:15px;margin-top:-15px;"/>' +
+                '                    </td>' +
+                '                    <td>' +
+                '                        <span id="priceu"></span>' +
+                '                    </td>' +
+                '                    <td>' +
+                '                        <span id="iva"></span>' +
+                '                    </td>' +
+                '                    <td>' +
+                '                        <span id="pricet" class="suma_total"></span>' +
+                '                    </td>' +
+                '                </tr>'
+            //$('#factura tr:last').after(item)
+            //$("#factura tbody:nth-child(1)").after(item)
+            $('#factura > tbody').prepend(item)
+            //$('#id_ps').val(value)
+            $('#priceu').text((price / 1.12).toFixed(2))
+            $('#pricet').text($('#priceu').text() * $('#quantity').val())
+            console.log('quantity: ' + $('#quantity').val())
+            console.log('priceu: ' + $('#priceu').text())
+            var iva = ($('#pricet').text() * 0.12).toFixed(2)
+            $('#iva').text(iva)
+            sumar_totales($('#quantity'))
+        }
+
+
+        if ($("#factura tbody tr").length == 1)
+            $('#factura').css("display", "block")
+
+    }
+
+    function sumar_totales(element) {
+        console.log("*****quantity= " + $(element).parent().parent().find("td:eq(3)").find("#quantity").val())
+        var sum = 0;
+        $(".suma_total").each(function (i) {
+            sum += parseFloat($(this).text());
+            console.log("suma: " + sum)
+            qt = $(this).parent().parent().find("td:eq(3)").find("#quantity")
+            if (qt.is($(element))) {
+                console.log("if: " + $(this).val() + " - " + $(element).val())
+                $(this).parent().parent().addClass("blink")
+                $(this).parent().parent().css('background-color', 'cornsilk')
+                $(this).parent().parent().find("td:eq(3)").find("#quantity").removeProp("readonly");
+            } else {
+                console.log("else: " + $(this).val() + " - " + $(element).val())
+                $(this).parent().parent().removeClass("blink")
+                $(this).parent().parent().find("td:eq(3)").find("#quantity").attr("readonly", "true")
+                $(this).parent().parent().css('background-color', '')
+            }
+        });
+
+        $("#subtotal_general").text(sum.toFixed(2));
+        $("#iva_general").text((sum * 0.12).toFixed(2));
+        $("#total_a_pagar").text((parseFloat($("#subtotal_general").text()) + parseFloat($("#iva_general").text())).toFixed(2));
+        $('#total_text').text(NumeroALetras($("#total_a_pagar").text()))
+    }
+
+    function eliminar_item(element) {
+        swal({
+            title: "¿Eliminar item seleccionado?",
+            text: "Confirme que desea eliminar el registro seleccionado!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $(element).parent().parent().remove()
+                calculate_total(element)
+                swal("El item seleccionado ha sido eliminado", {
+                    icon: "success",
+                });
+            } else {
+                swal("No se ha podido eliminar el item seleccionado");
+            }
+        });
+    }
+</script>
+</body>
+</html>

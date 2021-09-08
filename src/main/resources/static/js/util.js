@@ -17,9 +17,9 @@ function notificar(icon, title, message, type) {
             exit: 'animated fadeOutRight'
         },
         template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
-                '<span data-notify="title">{1}</span>' +
-                '<span data-notify="message">{2}</span>' +
-                '</div>'
+            '<span data-notify="title">{1}</span>' +
+            '<span data-notify="message">{2}</span>' +
+            '</div>'
     });
 }
 
@@ -45,14 +45,13 @@ function callWS(url, type, dataType, data) {
     return resultado;
 }
 
-function llenarComboItems(items, combo, selectedId)
-{
+function llenarComboItems(items, combo, selectedId) {
     var cmb = document.getElementById(combo);
     cmb.length = 1;
     for (var i = 0; i < items.length; i++) {
         var opt = document.createElement('option');
         opt.value = items[i].id;
-        opt.innerHTML = items[i].nombre;
+        opt.innerHTML = items[i].name;
         if (items[i].id == selectedId)
             opt.defaultSelected = true;
         cmb.appendChild(opt);
@@ -60,7 +59,7 @@ function llenarComboItems(items, combo, selectedId)
 }
 
 /**
- * 
+ *
  * @param {type} fecha , en formato MM/dd/yyyy
  * @returns {String}
  */
@@ -75,6 +74,7 @@ function formatearFechaConDiaYMes(fecha) {
     var f = new Date(fecha);
     return diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear();
 }
+
 /*
  * Trnasforma una fecha y la decuelve en un formato ordenado para trabajar con el control fecha
  */
@@ -159,8 +159,7 @@ function convertirAHora(strHora) {
     return f;
 }
 
-function redireccionar(pagina, cedula, format)
-{
+function redireccionar(pagina, cedula, format) {
     //alert('redireccionar 1 : '+pagina + ' / ' + cedula + ' / '+ format);
     if (cedula == null && format == null) {
         window.open(pagina, "mywindow");
@@ -175,8 +174,7 @@ function redireccionar(pagina, cedula, format)
     }
 }
 
-function devolverValorOTextoCombo(combo, devolver)
-{
+function devolverValorOTextoCombo(combo, devolver) {
     var lista = document.getElementById(combo);
     if (devolver == 'valor')
         return parseInt(lista.options[lista.selectedIndex].value);
@@ -213,14 +211,15 @@ function fechaActualFormatoConsulta() {
 
 //metodo para realizar la paginacion, se usa tambien el script jTPS.js
 function paginacion() {
-    $('#datos').jTPS({perPages: [5, 12, 15, 50, 'TODOS'], scrollStep: 1, scrollDelay: 30,
+    $('#datos').jTPS({
+        perPages: [5, 12, 15, 50, 'TODOS'], scrollStep: 1, scrollDelay: 30,
         clickCallback: function () {
             // target table selector
             var table = '#datos';
             // store pagination + sort in cookie
             document.cookie = 'jTPS=sortasc:' + $(table + ' .sortableHeader').index($(table + ' .sortAsc')) + ',' +
-                    'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
-                    'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
+                'sortdesc:' + $(table + ' .sortableHeader').index($(table + ' .sortDesc')) + ',' +
+                'page:' + $(table + ' .pageSelector').index($(table + ' .hilightPageSelector')) + ';';
         }
     });
 
@@ -245,10 +244,10 @@ function paginacion() {
 
     // bind mouseover for each tbody row and change cell (td) hover style
     $('#datos tbody tr:not(.stubCell)').bind('mouseover mouseout',
-            function (e) {
-                // hilight the row
-                e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
-            }
+        function (e) {
+            // hilight the row
+            e.type == 'mouseover' ? $(this).children('td').addClass('hilightRow') : $(this).children('td').removeClass('hilightRow');
+        }
     );
 }
 
@@ -257,7 +256,7 @@ function deleteRow(tableID) {
         var tbody = document.getElementById(tableID).getElementsByTagName("tbody")[0];
         var rowCount = tbody.rows.length;
         //alert('a eliminar: '+rowCount);
-        for (var i = 0; i < rowCount; ) {
+        for (var i = 0; i < rowCount;) {
             tbody.deleteRow(i);
             rowCount--;
         }
@@ -277,8 +276,7 @@ function invertirFecha(fecha, separador) {
     return fecha;
 }
 
-function agregarElementoACombo(combo, elemento, id, tooltip, deshabilitar)
-{
+function agregarElementoACombo(combo, elemento, id, tooltip, deshabilitar) {
     select = document.getElementById(combo);
     var opt = document.createElement('option');
     opt.value = id;
@@ -291,8 +289,9 @@ function agregarElementoACombo(combo, elemento, id, tooltip, deshabilitar)
     }
     select.appendChild(opt);
 }
+
 /**
- * 
+ *
  * @param {String} dia ->indicamos el día de la semana
  * @param {String} fecha_ini ->indicamos fecha de inicio de semana   (MM/dd/yyyy)
  * @param {String} fecha_fin ->indicamos fecha de fin de semana    (MM/dd/yyyy)
@@ -312,7 +311,7 @@ function generarFechaClase(dia, fecha_ini, fecha_fin) {
 }
 
 /**
- * 
+ *
  * @param {String} dia ->indicamos el día de la semana
  * @param {String} fecha_ini ->indicamos fecha de inicio de semana   (MM/dd/yyyy)
  * @param {String} fecha_fin ->indicamos fecha de fin de semana    (MM/dd/yyyy)
@@ -334,8 +333,7 @@ function generarFechasClases(dia, fecha_ini, fecha_fin) {
     return range;
 }
 
-function llenarCombo(combo, min, max, intervalo, activo)
-{
+function llenarCombo(combo, min, max, intervalo, activo) {
     select = document.getElementById(combo);
     for (var i = min; i <= max; i = i + intervalo) {
         var opt = document.createElement('option');
@@ -371,6 +369,7 @@ function addSelectAll(check, clase) {
         }
     });
 }
+
 /*
  *      librerías necesarias para paginar tabla, agregar botones de desacarga y agregar búsqueda
  *      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
@@ -393,15 +392,15 @@ function tabla(tabla) {
             this.api().columns().every(function () {
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                    );
-                            column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                        });
+                    .appendTo($(column.footer()).empty())
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column
+                            .search(val ? '^' + val + '$' : '', true, false)
+                            .draw();
+                    });
                 column.data().unique().sort().each(function (d, j) {
                     select.append('<option value="' + d + '">' + d + '</option>')
                 });
@@ -420,6 +419,7 @@ function tabla(tabla) {
         ]
     });
 }
+
 function tabla2(tabla) {
     $('#' + tabla).DataTable({
         "destroy": true,
@@ -439,15 +439,15 @@ function tabla2(tabla) {
             this.api().columns().every(function () {
                 var column = this;
                 var select = $('<select><option value=""></option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                    );
-                            column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                        });
+                    .appendTo($(column.footer()).empty())
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+                        column
+                            .search(val ? '^' + val + '$' : '', true, false)
+                            .draw();
+                    });
                 column.data().unique().sort().each(function (d, j) {
                     select.append('<option value="' + d + '">' + d + '</option>')
                 });
@@ -470,17 +470,17 @@ function tabla2(tabla) {
 function docente(url) {
     var docente = callWS(url, 'GET', 'JSON', {});
     var html = '<small><table class="table table-condensed table-responsive">' +
-            '<tr><th>periodo</th><th>modalidad</th><th>perfil</th><th>jornada</th><th>area</th><th>departamento</th><th>seccion</th></tr>';
+        '<tr><th>periodo</th><th>modalidad</th><th>perfil</th><th>jornada</th><th>area</th><th>departamento</th><th>seccion</th></tr>';
     $.each(docente, function (i, item) {
         html += '<tr> ' +
-                '<td>' + item.periodo + '</td>' +
-                '<td>' + item.modalidad + '</td>' +
-                '<td>' + item.perfil + '</td>' +
-                '<td>' + item.jornada + '</td>' +
-                '<td>' + item.area + '</td>' +
-                '<td>' + item.departamento + '</td>' +
-                '<td>' + item.seccion + '</td>' +
-                '</tr>';
+            '<td>' + item.periodo + '</td>' +
+            '<td>' + item.modalidad + '</td>' +
+            '<td>' + item.perfil + '</td>' +
+            '<td>' + item.jornada + '</td>' +
+            '<td>' + item.area + '</td>' +
+            '<td>' + item.departamento + '</td>' +
+            '<td>' + item.seccion + '</td>' +
+            '</tr>';
     });
     html += '</table></small>';
     $('#mdl_modal').modal('show');
@@ -490,11 +490,11 @@ function docente(url) {
 
 function confirmar(id, action, mensaje, clase, icon, text) {
     var tbl = '<form action="' + action + '" method="POST">' +
-            '<input type="hidden" id="id" name="id" value="' + id + '" />' +
-            '<label class="label label-default">comentario:</label>' +
-            '<textarea type="text" name="comentario" id="comentario" rows="4" cols="50" style="width:100%;" placeholder="ingrese motivo por el cuál realiza la acción de ' + text + '" required="required"></textarea>' +
-            '<br/><button class="center-block btn btn-' + clase + '" > <span class="glyphicon glyphicon-' + icon + '">' + text + '</span></button>' +
-            '</form>';
+        '<input type="hidden" id="id" name="id" value="' + id + '" />' +
+        '<label class="label label-default">comentario:</label>' +
+        '<textarea type="text" name="comentario" id="comentario" rows="4" cols="50" style="width:100%;" placeholder="ingrese motivo por el cuál realiza la acción de ' + text + '" required="required"></textarea>' +
+        '<br/><button class="center-block btn btn-' + clase + '" > <span class="glyphicon glyphicon-' + icon + '">' + text + '</span></button>' +
+        '</form>';
     $('#mdl_body').html(tbl);
     $('#mdl_label').html(mensaje);
     $('#mdl_modal').modal('show');

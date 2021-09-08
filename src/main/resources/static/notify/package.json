@@ -25,7 +25,7 @@
   "main": "bootstrap-notify.js",
   "files": [
     "bootstrap-notify.js",
-    "bootstrap-notify.min.js"
+    "bootstrap-notify.min.jsv1"
   ],
   "dependencies": {},
   "devDependencies": {

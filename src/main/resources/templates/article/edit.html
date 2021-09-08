@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículo</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+
+<div class="container" style="">
+    <div class="row" style="margin-top: 50px; margin-left:-40px;">
+        <div class="col s12 m12">
+            <div class="label"
+                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                Artículo.
+            </div>
+        </div>
+    </div>
+</div>
+<form action="../guardar" method="POST">
+    <div class="container">
+    <div class="row">
+        <div class="input-field col s6">
+            <p>
+                <label th:if="${asu == null}">
+                    <input name="status" type="checkbox" class="filled-in" checked="checked" />
+                    <span>Estado</span>
+                </label>
+                <label th:if="${asu != null}">
+                    <input th:if="${asu.status.id == 12}" name="status" type="checkbox" class="filled-in" checked="checked" />
+                    <input th:if="${asu.status.id != 12}" name="status" type="checkbox" class="filled-in"  />
+                    <span>Estado</span>
+                </label>
+            </p>
+        </div>
+        <div class="col s6" th:if="${asu != null}">
+            <label for="">Vincular vehículo</label>
+            <a class="btn btn-floating btn-small blue tooltipped modal-trigger" href="../../articlevehicle/edit/-1">
+                <i class="material-icons">exposure_plus_1</i>
+            </a>
+
+            <div class="collection">
+                <a th:each="ave: ${avehiculos}" th:href="${'../../articlevehicle/edit/'+ave.id}" class="collection-item" >
+                    <span th:text="${ave.vehicle.brand + '- ' + ave.vehicle.model + ' - FILTRO ' + ave.type_filter.name}"></span>
+                    <span class="chip pull-right" th:text="${ave.units}"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s4">
+            <input th:if="${asu == null}" id="code" name="code" type="text" class="validate" required>
+            <input th:if="${asu != null}" id="code" name="code" th:value="${asu.code}" type="text" class="validate" required>
+            <label for="icon_prefix">Código</label>
+        </div>
+        <div class="input-field col s8">
+            <i class="material-icons prefix">local_offer</i>
+            <input th:if="${asu == null}" type="hidden" id="id_asu" name="id_asu" value="-1">
+            <input th:if="${asu != null}" th:value="${asu.id}" type="hidden" id="id_asu" name="id_asu">
+
+            <input type="hidden" value="1" id="id_sucursal" name="id_sucursal">
+
+            <input th:if="${asu == null}" id="name" name="name" type="text" class="validate" required>
+            <input th:if="${asu != null}" th:value="${asu.name}" id="name" name="name" type="text" class="validate" required>
+            <label for="icon_prefix">Nombre</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <textarea th:if="${asu == null}" id="description" name="description" class="materialize-textarea"></textarea>
+            <textarea th:if="${asu != null}" th:text="${asu.description}" id="description" name="description" class="materialize-textarea"></textarea>
+            <label for="icon_prefix">Descripción</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s4">
+            <i class="material-icons prefix">add_shopping_cart</i>
+            <input th:if="${asu == null}" id="stock" name="stock" type="number" class="validate" required>
+            <input th:if="${asu != null}" id="stock" name="stock" th:value="${asu.stock}" type="number" class="validate" required>
+            <label for="icon_prefix">Stock</label>
+        </div>
+        <div class="input-field col s4">
+            <i class="material-icons prefix btn btn-sm red">attach_money</i>
+            <input th:if="${asu == null}" id="buyprice" name="buyprice" type="number" class="validate" style="padding-left:10px;" required>
+            <input th:if="${asu != null}" id="buyprice" name="buyprice" th:value="${asu.buy_price}" type="number" class="validate" style="padding-left:10px;" required>
+            <label for="icon_prefix">Precio de compra</label>
+        </div>
+        <div class="input-field col s4">
+            <i class="material-icons prefix btn btn-sm blue">attach_money</i>
+            <input th:if="${asu == null}" id="saleprice" name="saleprice" type="number" class="validate" style="padding-left:10px;" required>
+            <input th:if="${asu != null}" id="saleprice" name="saleprice" th:value="${asu.sale_price}" type="number" class="validate" style="padding-left:10px;" required>
+            <label for="icon_prefix">Precio de venta</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s4">
+            <label>Marca</label>
+            <select class="browser-default" id="mark" name="mark">
+                <option value="" disabled selected>-----</option>
+                <div th:if="${asu == null}" th:each="e : ${marcas}">
+                    <option th:value="${e.id}" th:text="${e.name}"/>
+                </div>
+                <div th:if="${asu != null}" th:each="e : ${marcas}">
+                    <option th:if="${e.id != asu.mark.id }" th:value="${e.id}"
+                            th:text="${e.name}"/>
+                    <option th:if="${e.id == asu.mark.id}" th:value="${e.id}"
+                            th:text="${e.name}" selected="selected"/>
+                </div>
+            </select>
+        </div>
+        <div class="col s4">
+            <label>Medida</label>
+            <select class="browser-default" id="measure" name="measure">
+                <option value="" disabled selected>-----</option>
+                <div th:if="${asu == null}" th:each="e : ${medidas}">
+                    <option th:value="${e.id}" th:text="${e.name}"/>
+                </div>
+                <div th:if="${asu != null}" th:each="e : ${medidas}">
+                    <option th:if="${e.id != asu.measure.id }" th:value="${e.id}"
+                            th:text="${e.name}"/>
+                    <option th:if="${e.id == asu.measure.id}" th:value="${e.id}"
+                            th:text="${e.name}" selected="selected"/>
+                </div>
+            </select>
+        </div>
+        <div class="col s4">
+            <label>Categoría</label>
+            <select class="browser-default" id="category" name="category">
+                <option value="" disabled selected>-----</option>
+                <div th:if="${asu == null}" th:each="e : ${categorias}">
+                    <option th:value="${e.id}" th:text="${e.name}"/>
+                </div>
+                <div th:if="${asu != null}" th:each="e : ${categorias}">
+                    <option th:if="${e.id != asu.category.id }" th:value="${e.id}"
+                            th:text="${e.name}"/>
+                    <option th:if="${e.id == asu.category.id}" th:value="${e.id}"
+                            th:text="${e.name}" selected="selected"/>
+                </div>
+            </select>
+        </div>
+    </div>
+    <div class="pull-right">
+        <button
+                style="background-color: #004370; position:fixed;margin-left:-50px;margin-top:-50px;z-index:1000;"
+                class="btn-floating btn waves-effect waves-light tooltipped modal-trigger" type="submit"
+                data-tooltip="Guardar" data-position="left">
+            <i class="material-icons right">save</i>
+        </button>
+    </div>
+</form>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+    function obtener_lugar(nivel, id){
+        if(nivel == 2){
+            cantones = callWS('../../api/v1/cantones/'+id)
+            llenarComboItems(cantones, 'canton', -1)
+        }else if(nivel == 3){
+            parroquias = callWS('../../api/v1/parroquias/'+id)
+            llenarComboItems(parroquias, 'parroquia', -1)
+        }
+    }
+
+    $(document).ready(function () {
+        //$(document).bind("contextmenu",function(e){
+        //    return false;
+        //});
+
+        $("#code").focus();
+
+        $("#quantity").keypress(function () {
+            alert("Handler for .keypress() called.");
+        });
+
+        $('#quantity').on('keypress', function () {
+            //var elemento = $(this).parent().parent().find("td:eq(1)").find("div").find("select").val();
+            console.log('ingreso a método change')
+
+        })
+
+        $('#code').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            //delay: 100,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/article/search/' + request.query + '/1',
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        if (data.length == 1) {
+                            $('#id_asu').val(data[0].id);
+                            $('#code').val(data[0].code);
+                            $('#name').val(data[0].name);
+                            $('#description').text(data[0].description);
+                            $('#stock').val(data[0].stock);
+                            $('#buyprice').val(data[0].buy_price);
+                            $('#saleprice').val(data[0].sale_price);
+                            $('#mark').val(data[0].mark.id);
+                            $('#measure').val(data[0].measure.id);
+                            $('#category').val(data[0].category.id);
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                //select_product(ui.data('code'), ui.data('name'), ui.data('unit'), ui.data('value'), ui.data('price'));
+            }
+        });
+    });
+
+    function eliminar_item(element) {
+        swal({
+            title: "¿Eliminar item seleccionado?",
+            text: "Confirme que desea eliminar el registro seleccionado!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $(element).parent().parent().remove()
+                calculate_total(element)
+                swal("El item seleccionado ha sido eliminado", {
+                    icon: "success",
+                });
+            } else {
+                swal("No se ha podido eliminar el item seleccionado");
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -21,11 +21,15 @@
     <meta name="twitter:description" content="Sistema de Gestión Contable Empresarial"/>
     <meta name="twitter:image" content="https://larisaplus.com"/>
 
-    <title>Larisa Plus++</title>
+    <title>RapiPlus++</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <link rel="stylesheet" th:href="@{/notify/animate.css}"/>
     <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
-    <script type="text/javascript" th:src="@{/notify/bootstrap-notify.min.js}"></script>
+    <script type="text/javascript" th:src="@{/notify/bootstrap-notify.min.jsv1}"></script>
     <script th:src="@{/js/util.js}"></script>
 
     <style>
@@ -74,9 +78,100 @@
             background-clip: border-box;
         }
     </style>
+    <style>
+        /* Made with love by Mutiullah Samim*/
 
+        @import url('https://fonts.googleapis.com/css?family=Numans');
+
+        html,body{
+            background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+
+        .container{
+            height: 100%;
+            align-content: center;
+        }
+
+        .card{
+            height: 370px;
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 400px;
+            background-color: rgba(0,0,0,0.5) !important;
+        }
+
+        .social_icon span{
+            font-size: 60px;
+            margin-left: 10px;
+            color: #FFC312;
+        }
+
+        .social_icon span:hover{
+            color: white;
+            cursor: pointer;
+        }
+
+        .card-header h3{
+            color: white;
+        }
+
+        .social_icon{
+            position: absolute;
+            right: 20px;
+            top: -45px;
+        }
+
+        .input-group-prepend span{
+            width: 50px;
+            background-color: #FFC312;
+            color: black;
+            border:0 !important;
+        }
+
+        input:focus{
+            outline: 0 0 0 0  !important;
+            box-shadow: 0 0 0 0 !important;
+
+        }
+
+        .remember{
+            color: white;
+        }
+
+        .remember input
+        {
+            width: 20px;
+            height: 20px;
+            margin-left: 15px;
+            margin-right: 5px;
+        }
+
+        .login_btn{
+            color: black;
+            background-color: #FFC312;
+            width: 100px;
+        }
+
+        .login_btn:hover{
+            color: black;
+            background-color: white;
+        }
+
+        .links{
+            color: white;
+        }
+
+        .links a{
+            margin-left: 4px;
+        }
+    </style>
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -97,7 +192,8 @@
         }
 
         .banner-sec {
-            background: url(/img/lavadora.jpg) no-repeat left bottom;
+            /*background: url(/img/lavadora.jpg) no-repeat left bottom;*/
+            background-color: white;
             background-size: cover;
             min-height: 500px;
             border-radius: 0 10px 10px 0;
@@ -219,7 +315,7 @@
             max-width: 525px;
             min-height: 670px;
             position: relative;
-            background: url() no-repeat center;
+            /*background: url() no-repeat center;*/
             box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
         }
 
@@ -256,7 +352,7 @@
         }
 
         .login-html .tab {
-            font-size: 22px;
+            font-size: 16px;
             margin-right: 15px;
             padding-bottom: 5px;
             margin: 0 15px 10px 0;
@@ -380,77 +476,18 @@
 </head>
 <!------ Include the above in your HEAD tag ---------->
 <body>
-<section class="login-block">
+<section class="">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="margin-left: 100px;">RAPI PLUS ++</h3>
+        </div>
+    </div>
+</section>
+
+<section class="">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-
-                <div class="login-html">
-                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1"
-                                                                                             class="tab">Sign
-                    In</label>
-                    <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign
-                    Up</label>
-                    <div class="login-form">
-                        <form role="form" th:action="@{/login}" method="post">
-                            <div class="sign-in-htm">
-                                <div class="group">
-                                    <label for="username" class="label">Username</label>
-                                    <input id="username" type="text" class="input" name="username" autocomplete="true"
-                                           required="required" placeholder="username" autofocus="autofocus"/>
-
-                                </div>
-                                <div class="group">
-                                    <label for="password" class="label">Password</label>
-                                    <input id="password" type="password" class="input" name="password"
-                                           placeholder="password"/>
-                                </div>
-                                <div class="group">
-                                    <input id="check" type="checkbox" class="check" checked>
-                                    <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                                </div>
-                                <div class="group">
-                                    <input type="submit" class="button" value="Sign In">
-                                </div>
-                                <div class="hr"></div>
-                                <div class="foot-lnk">
-                                    <a href="#forgot">Forgot Password?</a>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-
-                    <!--<div class="sign-up-htm">
-                        <div class="group">
-                            <label for="user" class="label">Username</label>
-                            <input id="user" type="text" class="input">
-                        </div>
-                        <div class="group">
-                            <label for="pass" class="label">Password</label>
-                            <input id="pass" type="password" class="input" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="pass" class="label">Repeat Password</label>
-                            <input id="pass" type="password" class="input" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="pass" class="label">Email Address</label>
-                            <input id="pass" type="text" class="input">
-                        </div>
-                        <div class="group">
-                            <input type="submit" class="button" value="Sign Up">
-                        </div>
-                        <div class="hr"></div>
-                        <div class="foot-lnk">
-                            <label for="tab-1">Already Member?</a>
-                        </div>
-                    </div>-->
-                </div>
-
-            </div>
-
-            <div class="col-md-8 banner-sec">
+            <div class="col-md-8">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -501,9 +538,94 @@
 
                 </div>
             </div>
+            <div class="col-md-4">
+
+                <div class="login-html">
+                    <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                    <label for="tab-1" class="tab">Iniciar</label>
+                    <input id="tab-2" type="radio" name="tab" class="sign-up">
+                    <label for="tab-2" class="tab">Registrarse</label>
+                    <div class="login-form">
+                        <form role="form" th:action="@{/login}" method="post">
+                            <div class="sign-in-htm">
+                                <div class="group">
+                                    <!--<label for="username" class="label">Usuario</label>-->
+                                    <input id="username" type="text" class="input" name="username" autocomplete="true"
+                                           required="required" placeholder="usuario" autofocus="autofocus"/>
+
+                                </div>
+                                <br/>
+                                <div class="group">
+                                    <!--<label for="password" class="label">Contraseña</label>-->
+                                    <input id="password" type="password" class="input" name="password"
+                                           placeholder="contraseña"/>
+                                </div>
+                                <div class="group">
+                                    <input id="check" type="checkbox" class="check" checked>
+                                    <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                                </div>
+                                <div class="group">
+                                    <input type="submit" class="button" value="Sign In">
+                                </div>
+                                <div class="hr"></div>
+                                <div class="foot-lnk">
+                                    <a href="#forgot">Forgot Password?</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!--<div class="sign-up-htm">
+                        <div class="group">
+                            <label for="user" class="label">Username</label>
+                            <input id="user" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Repeat Password</label>
+                            <input id="pass" type="password" class="input" data-type="password">
+                        </div>
+                        <div class="group">
+                            <label for="pass" class="label">Email Address</label>
+                            <input id="pass" type="text" class="input">
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Sign Up">
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">
+                            <label for="tab-1">Already Member?</a>
+                        </div>
+                    </div>-->
+                </div>
+
+            </div>
         </div>
     </div>
 </section>
-
+<!--
+<script th:src="@{/js/jquery.icheck.js}"></script>
+<script>
+    $(function () {
+        $("input").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            increaseArea: '20%' // optional
+        });
+        $(".dark input").iCheck({
+            checkboxClass: 'icheckbox_polaris',
+            increaseArea: '20%' // optional
+        });
+        $(".form-control").focus(function () {
+            $(this).closest(".textbox-wrap").addClass("focused");
+        }).blur(function () {
+            $(this).closest(".textbox-wrap").removeClass("focused");
+        });
+    });
+</script>
+-->
 </body>
 </html>

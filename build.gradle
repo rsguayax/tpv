@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.larisa'
-version = '1.0'
+version = ''
 sourceCompatibility = '1.8'
 
 configurations {
@@ -42,9 +42,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.61"
 
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    runtimeOnly 'mysql:mysql-connector-java:8.0.21'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+    //runtimeOnly 'mysql:mysql-connector-java:8.0.21'
     //runtimeOnly 'mysql:mysql-connector-java:5.1.44'//para mysql de producción
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

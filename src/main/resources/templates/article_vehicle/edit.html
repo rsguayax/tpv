@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículo</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+
+<div class="container" style="">
+    <div class="row" style="margin-top: 50px; margin-left:-40px;">
+        <div class="col s12 m12">
+            <div class="label"
+                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                Artículo - Vehículo
+            </div>
+        </div>
+    </div>
+</div>
+<form action="../guardar" method="POST">
+    <div class="container">
+
+        <input type="hidden" th:if="${ave == null}" value="-1" name="id_article_vehicle"/>
+        <input type="hidden" th:if="${ave != null}" th:value="${ave.id}" name="id_article_vehicle" />
+
+        <div class="row">
+        <div class="col s12 m6  input-icons" style="margin-right: -20px;">
+            <i class="fa fa-tags fa-lg" aria-hidden="true" style="z-index:1000"></i>
+            <input th:if="${ave == null}" type="text" id="article" name="article" class="input-field autocomplete validate "
+                   placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
+                   style="width:80%; background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true" value=""/>
+            <input th:if="${ave != null}" type="text" id="article" name="article" class="input-field autocomplete validate "
+                   placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
+                   style="width:80%; background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true" th:value="${ave.article.name}"/>
+            <label for="icon_prefix">Artículo</label>
+
+            <input th:if="${ave == null}" type="hidden" id="id_article" name="id_article" value="-1"/>
+            <input th:if="${ave != null}" type="hidden" id="id_article" name="id_article" th:value="${ave.article.id}"/>
+
+        </div>
+        <div class="col s12 m6  input-icons" style="margin-right: -20px;">
+            <i class="fa fa-truck fa-lg" aria-hidden="true" style="z-index:1000"></i>
+            <input th:if="${ave == null}"  type="text" id="vehicle" name="vehicle" class="input-field autocomplete validate "
+                   placeholder="buscar vehículo marca/modelo"
+                   style="width:80%; background-color:cyan; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true"/>
+            <input th:if="${ave != null}"  type="text" id="vehicle" name="vehicle" class="input-field autocomplete validate "
+                   placeholder="buscar vehículo marca/modelo"
+                   style="width:80%; background-color:cyan; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true" th:value="${ave.vehicle.brand + ' - ' + ave.vehicle.model + ' FILTRO ' + ave.type_filter.name }"/>
+            <label for="icon_prefix">Vehículo</label>
+
+            <input th:if="${ave == null}" type="hidden" id="id_vehicle" name="id_vehicle" value="-1"/>
+            <input th:if="${ave != null}" type="hidden" id="id_vehicle" name="id_vehicle" th:value="${ave.vehicle.id}"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s4">
+            <label>Tipo</label>
+            <select class="browser-default" id="types" name="types">
+                <option value="" disabled selected>-----</option>
+                <div th:if="${ave == null}" th:each="e : ${tipos}">
+                    <option th:value="${e.id}" th:text="${e.name}"/>
+                </div>
+                <div th:if="${ave != null}" th:each="e : ${tipos}">
+                    <option th:if="${e.id != ave.type_filter.id }" th:value="${e.id}"
+                            th:text="${e.name}"/>
+                    <option th:if="${e.id == ave.type_filter.id}" th:value="${e.id}"
+                            th:text="${e.name}" selected />
+                </div>
+            </select>
+        </div>
+        <div class="input-field col s4">
+            <i class="material-icons prefix">add_shopping_cart</i>
+            <input th:if="${ave == null}" id="units" name="units" type="number" class="validate" required>
+            <input th:if="${ave != null}" id="units" name="units" th:value="${ave.units}" type="number" class="validate" required>
+            <label for="icon_prefix">Unidades requeridas</label>
+        </div>
+        <div class="input-field col s4">
+            <i class="material-icons prefix">build</i>
+            <input th:if="${ave == null}" id="time_change" name="time_change" type="number" class="validate">
+            <input th:if="${ave != null}" id="time_change" name="time_change" th:value="${ave.time_change}" type="number" class="validate">
+            <label for="icon_prefix">Tiempo de cambio - km</label>
+        </div>
+        <div class="input-field col s12">
+            <i class="material-icons prefix">textsms</i>
+            <textarea th:if="${ave == null}" id="description" name="description" class="materialize-textarea"></textarea>
+            <textarea th:if="${ave != null}" th:text="${ave.description}" id="description" name="description" class="materialize-textarea"></textarea>
+            <label for="icon_prefix">Descripción</label>
+        </div>
+
+    </div>
+
+    <div class="pull-right">
+        <button
+                style="background-color: #004370; position:fixed;margin-left:-50px;margin-top:-50px;z-index:1000;"
+                class="btn-floating btn waves-effect waves-light tooltipped modal-trigger" type="submit"
+                data-tooltip="Guardar" data-position="left">
+            <i class="material-icons right">save</i>
+        </button>
+    </div>
+</form>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+
+        $("#article").focus();
+
+        $('#article').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            //delay: 100,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/article/search/' + request.query,
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        if (data.length == 1) {
+                            $('#article').val(data[0].name)
+                            $('#id_article').val(data[0].id)
+                        } else {
+                            response.call(this, $.map(data, function (item) {
+                                return {
+                                    label: item.name,
+                                    value: item.id
+                                };
+                            }));
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#id_article').val(ui.data('value'))
+            }
+        });
+
+        $('#vehicle').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            //delay: 100,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/vehicle/search/' + request.query,
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        if (data.length == 1) {
+                            $('#vehicle').val(data[0].brand + ' - ' + data[0].model)
+                            $('#id_vehicle').val(data[0].id)
+                        } else {
+                            response.call(this, $.map(data, function (item) {
+                                return {
+                                    label: item.brand + ' ' + item.model,
+                                    value: item.id
+                                };
+                            }));
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#id_vehicle').val(ui.data('value'))
+            }
+        });
+    });
+
+    function eliminar_item(element) {
+        swal({
+            title: "¿Eliminar item seleccionado?",
+            text: "Confirme que desea eliminar el registro seleccionado!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $(element).parent().parent().remove()
+                calculate_total(element)
+                swal("El item seleccionado ha sido eliminado", {
+                    icon: "success",
+                });
+            } else {
+                swal("No se ha podido eliminar el item seleccionado");
+            }
+        });
+    }
+</script>
+</body>
+</html>

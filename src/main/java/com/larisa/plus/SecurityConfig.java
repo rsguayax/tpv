@@ -5,6 +5,7 @@
  */
 package com.larisa.plus;
 
+import com.larisa.plus.model.user.User;
 import com.larisa.plus.model.user.UserRepository;
 import com.larisa.plus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -93,19 +95,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/api/v1/**").permitAll()
+                //.antMatchers("/api/v1/user").permitAll()
                 .antMatchers("/visor/**").permitAll()
                 .antMatchers("/inventory/**").hasAnyAuthority("SUPER_USER", "ADMIN")
                 .anyRequest().authenticated()
+                //.and().oauth2ResourceServer().jwt()
                 .and()
                 .csrf().disable().formLogin()
 //                .csrf().and().formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/inventory/")
+                .defaultSuccessUrl("/sale/")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                //                .successHandler(loginSuccessHandler())
+                .successHandler(loginSuccessHandler())
                 .failureHandler(loginFailureHandler())
                 .and()
                 .logout()
@@ -120,6 +123,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        //web.ignoring().antMatchers("/**");
         web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/img/**", "/DataTables/**");
     }
 
@@ -144,6 +148,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         });
     }
 
+    private AuthenticationSuccessHandler loginSuccessHandler() {
+
+        return ((request, response, authentication) ->{
+            String usuario = request.getParameter("usuario");
+            User us = usRepo.findByUsername(usuario);
+            response.sendRedirect(request.getContextPath() + "/sale/");
+        });
+
+    }
 //    private AuthenticationSuccessHandler loginSuccessHandler() {
 //        return ((request, response, authentication) -> response.sendRedirect(request.getContextPath() + "/"));
 //    }

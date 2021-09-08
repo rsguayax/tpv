@@ -32,7 +32,7 @@ public class Enterprise extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "manager")
-    private User propietary;
+    private User manager;
 
     private boolean status;
     private Date register;
@@ -120,12 +120,12 @@ public class Enterprise extends BaseEntity {
         this.socialWeb = socialWeb;
     }
 
-    public User getPropietary() {
-        return propietary;
+    public User getManager() {
+        return manager;
     }
 
-    public void setPropietary(User propietary) {
-        this.propietary = propietary;
+    public void setManager(User manager) {
+        this.manager = manager;
     }
 
     public boolean isStatus() {

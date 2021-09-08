@@ -5,65 +5,68 @@
     <style th:inline="text">
         .marca_agua {
             background: white;
-            /*background-image: url([[@{/img/vmad_body.png}]]);*/
+            /*
+            background-image: url('/larisa/img/logo-elrey.png');
+            border-radius: 50px;
             background-position-y: 50px;
+            background-size: 63px 63px;
+            */
+            /*background-image: url([[@{/img/vmad_body.png}]]);*/
+            /*background-position-y: 50px;*/
             background-repeat: no-repeat;
             /*padding: 0em 1em 2em 70px;*/
-            margin-top: 0;
+            /*margin-top: 0;*/
             font-family: sans-serif;
-            background-position: top left;
+            /*background-position: top left;*/
             background-attachment: fixed;
         }
 
+
     </style>
 
-    <nav style="background: #003f72; height: 40px; position: fixed;" class="">
+    <nav style="background: #0000ff; height: 42px; position: fixed;" class="">
         <div class="nav-wrapper">
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
             <a th:href="${''}" target="_blank">
-                <img th:src="${''}" class="responsive-img" th:alt="${'Observatorio '+ '' }"
-                     style="height:40px;margin-top:-27px;"/>
+                <img th:src="@{/img/logo-elrey.png}" class="responsive-img" th:alt="${'LAVADORA Y LUBRICADORA EL REY' }"
+                     style="height:60px;margin-top:-1px; background-color: white; border-radius:50px;"/>
             </a>
-
-            <ul class="nav-mobile right hide-on-med-and-down" style="margin-top:50px;">
+            <label style="font-size: 20px; color:white;" class="">LAVADORA Y LUBRICADORA EL REY</label>
+            <ul class="nav-mobile right hide-on-med-and-down" style="margin-top:15px;">
                 <li>
-                    <a href="#modal_mapa" class="btn btn-floating btn-small tooltipped modal-trigger"
-                       data-tooltip="Geolocalización de conflictos socioambientales" data-position="right"> <i
-                            class="material-icons">location_on</i> </a>
-                    <!--<a onclick="if($('#div_mapa').is(':visible'))$('#div_mapa').hide();else $('#div_mapa').show();" style="cursor:pointer;" class="btn btn-floating btn-small tooltipped" data-tooltip="Mostrar mapa" data-position="left"> <i class="material-icons">location_on</i> </a>-->
+                    <span id="reloj" class="text-muted pull-right"></span>
                 </li>
-                <li>
-                    <a href="#modal_autenticar" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
-                       data-tooltip="Ingresar al sistema" data-position="left"> <i
-                            class="material-icons">vpn_key</i> </a>
-                </li>
-                <li>
-                    <a href="#modal_reportar" class="btn btn-floating btn-small tooltipped modal-trigger"
-                       data-tooltip="Reportar conflicto" data-position="right"> <i class="material-icons">group</i>
-                    </a>
-                </li>
-                <li>
-                    <a th:href="${'/observatorio/principal/'+''}" class="btn btn-floating btn-small tooltipped"
-                       data-tooltip="Ir al inicio" data-position="right"> <i class="material-icons">home</i> </a>
-                </li>
-
-                <li>
-                    <p th:text="${''}"
-                       style="font-family: 'Roboto Condensed', sans-serif; color:#eaab00; font-size: 16px;"></p>
-                </li>
-                <!--                    <li th:if="${#lists.isEmpty(menu)}">
-                                        <p style="float:right; margin-top: -20px;font-size: 12px;"><em>Sistema de Monitoreo de Conflictos con Sistema de Alerta Temprana</em></p>
-                                    </li>-->
                 <li>
                     <a href="/larisa/logout" class="tooltipped" data-tooltip="Salir del sistema"
                        data-position="left" style="cursor:pointer;margin-top:-10px;">
                         <div class="chip">
-                            <img th:src="${'/img/user-profile.png'}" alt="Usuario Autenticado"/>
+                            <img th:src="@{/img/user-profile.png}" alt=""/>
                             &nbsp;&nbsp;
-                            <label th:text="${'Lavadora El Rey'}"></label>
+                            <label th:if="${user != null}" th:text="${user.name}"></label>
                         </div>
                     </a>
+                </li>
+            </ul>
+            <ul class="nav-mobile right hide-on-med-and-down" style="margin-top:50px;">
+                <li>
+                    <a href="/larisa/sale/" class="btn btn-floating btn-small blue tooltipped modal-trigger"
+                       data-tooltip="Ventas" data-position="left"> <i
+                            class="material-icons">add_shopping_cart</i> </a>
+                    <!--<a onclick="if($('#div_mapa').is(':visible'))$('#div_mapa').hide();else $('#div_mapa').show();" style="cursor:pointer;" class="btn btn-floating btn-small tooltipped" data-tooltip="Mostrar mapa" data-position="left"> <i class="material-icons">location_on</i> </a>-->
+                </li>
+                <li>
+                    <a href="/larisa/buy/list" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
+                       data-tooltip="Compras" data-position="left"> <i
+                            class="material-icons">local_offer</i> </a>
+                </li>
+                <li>
+                    <a th:href="${'#'}" class="btn btn-floating btn-small tooltipped"
+                       data-tooltip="Ir al inicio" data-position="left"> <i class="material-icons">home</i> </a>
+                </li>
+                <li>
+                    <a href="/larisa/article/edit/-1" class="btn btn-floating btn-small green tooltipped"
+                       data-tooltip="Nuevo artículo" data-position="left"> <i class="material-icons">local_offer</i> </a>
                 </li>
             </ul>
         </div>
@@ -71,11 +74,11 @@
 
     <ul class="sidenav" id="mobile-demo">
         <li>
-            <a href="logout" class="tooltipped" data-tooltip="Salir del sistema" data-position="left"
+            <a href="/larisa/logout" class="tooltipped" data-tooltip="Salir del sistema" data-position="left"
                style="cursor:pointer;">
                 <div class="chip">
-                    <img th:src="${'/img/user-profile.png'}" alt="Usuario Autenticado"/>
-                    <label th:text="${'Lavadora El Rey'}"></label>
+                    <img th:src="${'/img/user-profile.png'}" alt=""/>
+                    <label th:text="${user.name}"></label>
                 </div>
             </a>
         </li>

@@ -3,11 +3,11 @@
         <div class="footer-content">
             <div class="row">
                 <div class="col s3 m3 tooltipped" data-balloon-length="medium"  data-tooltip="Grupo de Investigación Sistemas Basados en el Conocimiento" data-balloon-pos="right">
-                    <img th:src="@{/img/kbs.png}"  style="height: 63px; " />
+                    <img th:src="@{/img/logo-elrey.png}"  style="height: 63px; " class="circle"/>
                 </div>
                 <div class="col s9 m9">
                     <br/>
-                    <p>Copyright 2020 Sistema de Planes Docentes. All rights reserved. <a href="https://twitter.com/rsguayax" target="_blank">@rsguayax</a></p>
+                    <p>Copyright 2021 Sistema de Planificación de Recursos Empresariales. All rights reserved. <a href="http://www.rapisoft.com.ec" target="_blank">Rapisoft</a></p>
                 </div>
             </div>
         </div>
@@ -15,6 +15,8 @@
 
     <script th:src="@{/js/modernizr.js}"></script>
     <!--<script type="text/javascript" th:src="@{/js/jquery-1.11.2.js}" ></script>-->
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <script type="text/javascript" th:src="@{/js/moment.js}"  ></script>
@@ -50,6 +52,10 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript" th:src="@{/js/util.js}"></script>
+    <script type="text/javascript" th:src="@{/js/numero_a_letras.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/primeui-1.0-min.js}"></script>
 
     <script>
         function mueveReloj() {
@@ -76,12 +82,12 @@
             $('.datepicker').datepicker();
             //$('.datepicker').datepicker('format', 'yyyy,mm,dd');
             $('.collapsible').collapsible();
-            $('#content').pushpin({
+           /* $('#content').pushpin({
                 top: $('#content').offset().top
             });
             $('.scrollspy').scrollSpy({
                 scrollOfffset: 0
-            });
+            });*/
 
             //        tinymce.init({
 //            selector: 'texto', // change this value according to your HTML
@@ -169,4 +175,5 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <!--<script th:src="@{/js/jquery.panelSnap.js}"></script>-->
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </section>

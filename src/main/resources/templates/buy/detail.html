@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+    <style>
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<form action="" method="post">
+    <div class="" style="">
+        <div class="row" style="">
+            <div class="col s12 m12">
+                <br/><br/>
+                <div class="label container"
+                     style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                    Compra.
+                </div>
+
+                <section>
+                    <div class="row">
+                        <div class="input-field col m3 s6 ">
+                            <select name="status" id="status" style="background-color: blue;">
+                                <option value="" disabled selected>Seleccione</option>
+                                <span th:each="item : ${status_buy}">
+                                <option th:if="${item.id != buy.status.id}" th:value="${item.id}"
+                                        th:text="${item.name}"></option>
+                                <option th:if="${item.id == buy.status.id}" th:value="${item.id}" th:text="${item.name}"
+                                        selected="selected"></option>
+                            </span>
+                            </select>
+                            <label>Estado.</label>
+                        </div>
+
+                        <div class="input-field col m3 s6 ">
+                            <select name="document_type" id="document_type">
+                                <option value="" disabled selected>Seleccione</option>
+                                <span th:each="item : ${type_document}">
+                                    <option th:if="${item.id != buy.document_type.id}" th:value="${item.id}"
+                                            th:text="${item.name}"></option>
+                                    <option th:if="${item.id == buy.document_type.id}" th:value="${item.id}"
+                                            th:text="${item.name}" selected="selected"></option>
+                                </span>
+                            </select>
+                            <label>Tipo documento.</label>
+                        </div>
+
+                        <div class="input-field col m3 s6">
+                            <input th:if="${buy == null}" type="text" id="document_number" name="document_number"
+                                   style="height: 20px; margin: -10px 0px -20px 0px;" class="validate"/>
+                            <input th:if="${buy != null}" th:value="${buy.document_number}" type="text"
+                                   id="document_number" name="document_number" class="validate"/>
+                            <label>Nro. documento.</label>
+                        </div>
+                        <div class="input-field col m3 s6">
+                            <input th:if="${buy == null}" type="text" class="validate" id="buy_date" name="buy_date"
+                                   style="height: 20px; margin: -10px 0px -20px 0px;"/>
+                            <input th:if="${buy != null}" class="validate" th:value="${buy.buy_date}" type="text"
+                                   id="buy_date" name="buy_date"/>
+                            <label class="active" for="first_name2">Fecha de compra:</label>
+                        </div>
+                    </div>
+                    <div class="row center-block text-center thumbnail" style="background-color:greenyellow;margin-top: -20px;">
+                        <div class="input-field col m9 s12 ">
+                            <a href="#" style="cursor: pointer;" class="center-block text-center">
+                                <input th:if="${buy == null}" type="text" id="provider" name="provider" class="autocomplete validate"
+                                       placeholder="Ingresese nro. de identificación o nombre"
+                                       style="width: 80%; height:30px; font-weight: bold; background-color: #F5F8FA; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 10px;"
+                                       required="true"/>
+                                <input th:if="${buy != null}" type="text" id="provider" name="provider" class="autocomplete validate"
+                                       placeholder="Ingresese nro. de identificación o nombre" th:value="${buy.user_enterprise.user.name}"
+                                       style="width: 80%; height:30px; font-weight: bold; background-color: #F5F8FA; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 10px;"
+                                       required="true"/>
+                            </a>
+                            <label class="active" for="first_name2">Proveedor</label>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <input th:if="${buy == null}" type="text" id="identifier" name="identifier" disabled/>
+                            <input th:if="${buy != null}" th:value="${buy.provider.user_enterprise.user.identifier}"
+                                   type="text" id="identifier" name="identifier" disabled/>
+                            <label>Identificación.</label>
+                        </div>
+
+                        <div class="input-field col m3 s12">
+                            <input th:if="${buy == null}" type="text" id="email" name="email" disabled/>
+                            <input th:if="${buy != null}" th:value="${buy.provider.user_enterprise.user.email}"
+                                   type="text" id="email" name="email" disabled/>
+                            <label>Correo.</label>
+                        </div>
+                        <div class="input-field col m3 s12">
+                            <input th:if="${buy == null}" type="text" id="telephone" name="telephone" disabled/>
+                            <input th:if="${buy != null}" th:value="${buy.provider.user_enterprise.user.telephone}"
+                                   type="text" id="telephone" name="telephone" disabled/>
+                            <label>Teléfono.</label>
+                        </div>
+                        <div class="input-field col m6 s12">
+                            <textarea th:if="${buy == null}" id="direction" name="direction"
+                                      class="materialize-textarea" disabled></textarea>
+                            <textarea th:if="${buy != null}" id="direction"
+                                      name="direction" class="materialize-textarea"
+                                      th:text="${buy.provider.user_enterprise.user.ubication.city.name}" disabled></textarea>
+                            <label>Dirección.</label>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: -20px;">
+                        <div class="input-field col m6 s12">
+                            <textarea th:if="${buy == null}" id="motive" name="motive"
+                                      class="materialize-textarea"></textarea>
+                            <textarea th:if="${buy != null}" th:text="${buy.name}" id="motive"
+                                      name="motive" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Motivo de compra</label>
+                        </div>
+                        <div class="input-field col m6 s12">
+                            <textarea th:if="${buy == null}" id="observation" name="observation"
+                                      class="materialize-textarea"></textarea>
+                            <textarea th:if="${buy != null}" th:text="${buy.observation}" id="observation"
+                                      name="observation" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Observación</label>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m5  input-icons" style="margin-right: -20px;">
+            <i class="fa fa-tags fa-lg" aria-hidden="true" style="z-index:1000"></i>
+            <input type="text" id="search_ps" name="search_ps" class="input-field autocomplete validate "
+                   placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
+                   style="background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true"/>
+        </div>
+        <div class="col s2 m1">
+            <a href="#modal_articulo" class="btn-floating btn-small waves-effect waves-light green modal-trigger"><i
+                    class="material-icons">add</i></a>
+        </div>
+        <div class="col s12 m6" style="margin-left: 20px;">
+        <span style="margin-left: 20px; padding: 5px;font-size:30px;">
+            Total compra: $ <span id="total_pay">0</span>
+        </span>
+            <span class="right-align"
+                  style="border-right: 15px solid white; color:white; padding: 10px; background-color: cornflowerblue; border-right: lavenderblush 1px; border: solid 0px blue; border-radius: 0px 0px 0px 25px;">
+                        IVA: $ <span id="iva_general">0</span>
+                    </span>
+
+            <span class="right-align"
+                  style="color:white; padding: 10px; background-color: blue; border: solid 0px blue; border-radius: 0px 25px 0px 0px;">
+                        Subtotal: $ <span id="subtotal_general">0</span>
+                    </span>
+            <br/><br/>
+            <div class="divider" style="margin-left: 20px; margin-top: -14px;"></div>
+            <p id="total_text" class="" style=""></p>
+        </div>
+    </div>
+    <div class="row" style="margin: -20px 20px 20px 20px;">
+        <div class="col s12 m12">
+            <small>
+                <table id="factura" class="responsive-table striped"
+                       style="display:none;line-height: 1px; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th style="width: 44%;" colspan="4">
+                            <p>
+                                <label>
+                                    <input class="with-gap" name="benefit" value="1" type="radio"/>
+                                    <span>Porcentaje Ganancia (%):</span>
+                                </label>
+                                <label>
+                                    <input class="with-gap" name="benefit" value="2" type="radio"/>
+                                    <span>Valor Ganancia ($):</span>
+                                </label>
+                                <input type="text" id="value_benefit" onkeyup="calculate_total(this);" value="0"
+                                       style="width: 20%; height:15px;margin-top:-15px; text-align:right;" class=""/>
+                            </p>
+                        </th>
+
+                        <th style="width: 18%; background-color: lightcoral;color: white;text-align: center;"
+                            colspan="3"><span
+                                class="text-center">PRECIO DE COMPRA <i
+                                class="material-icons">local_offer</i></span></th>
+
+                        <th style="width: 18%; background-color: lightgreen;color: white;text-align: center;"
+                            colspan="3"><span
+                                class="text-center">PRECIO DE VENTA <i
+                                class="material-icons">add_shopping_cart</i></span></th>
+
+                    </tr>
+                    <tr>
+                        <th style="width: 5%;"></th>
+                        <th style="width: 33%;text-align: center;">Producto/Servicio</th>
+                        <th style="width: 10%;text-align: center;">F. expiración</th>
+                        <th style="width: 10%; text-align: center;">Cantidad</th>
+
+                        <th style="width: 7%; background-color: lightcoral;text-align: center;">P. unitario</th>
+                        <th style="width: 7%; background-color: lightcoral;text-align: center;">IVA</th>
+                        <th style="width: 7%; background-color: lightcoral;color: white;text-align: center;">Total</th>
+
+                        <th style="width: 7%; background-color: lightgreen;text-align: center;">P. unitario</th>
+                        <th style="width: 7%; background-color: lightgreen;text-align: center;">IVA</th>
+                        <th style="width: 7%; background-color: lightgreen;color: white;text-align: center;">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </small>
+        </div>
+    </div>
+</form>
+
+<div id="root">...</div>
+
+<div id="modal_articulo" class="modal">
+    <div class="modal-content">
+        <h4>Artículo.</h4>
+        <div class="input-field col s12 m6">
+            <input id="code" type="text" class="validate">
+            <label for="code">Código</label>
+        </div>
+        <div class="input-field col s12 m6">
+            <input id="name" type="text" class="validate">
+            <label for="name">Nombre</label>
+        </div>
+        <div class="input-field col s12 m12">
+            <textarea name="description" id="description" rows="3"></textarea>
+            <label for="description">Descripción</label>
+        </div>
+        <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<script>
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+    }
+
+    const user = {
+        firstName: 'Harper',
+        lastName: 'Perez',
+    };
+
+    const element = '<h1>Hello.., {formatName(user)}!</h1>';
+
+    ReactDOM.render(element, document.getElementById('root'));
+    /*function tick() {
+        const element = (
+            <div>
+            <h1>Hello, world!</h1>
+        <h2>It is {new Date().toLocaleTimeString()}.</h2>
+        </div>
+    );
+        ReactDOM.render(element, document.getElementById('root'));}
+
+    setInterval(tick, 1000);*/
+</script>
+<script th:inline="javascript">
+
+    function calculate_total(elemento) {
+
+        quantity = $(elemento).parent().parent().find("td:eq(3)").find("#quantity").val()
+        price_unit_buy = $(elemento).parent().parent().find("td:eq(4)").find("#priceu_buy").val()
+        iva_unit_buy = $(elemento).parent().parent().find("td:eq(5)").find("span")
+        iva_unit_buy.text((price_unit_buy * 0.12).toFixed(2))
+        pricet_buy = $(elemento).parent().parent().find("td:eq(6)").find("span")
+        console.log('price_buy: ' + pricet_buy.text())
+        pricet_buy.text((parseFloat(price_unit_buy) * quantity).toFixed(2))
+
+        price_unit_sale = $(elemento).parent().parent().find("td:eq(7)").find("#priceu_sale")
+        //if(parseInt($("input[name='benefit']:checked").val()) == 1){
+        //    price_unit_sale.val( (parseFloat(price_buy.text()) * parseFloat($('#value_benefit').val())).toFixed(2) )
+        //}else{
+        //    price_unit_sale.val( (parseFloat(price_buy.text()) + parseFloat($('#value_benefit').val())).toFixed(2) )
+        //}
+
+
+        iva_unit_sale = $(elemento).parent().parent().find("td:eq(8)").find("span")
+        iva_unit_sale.text(((parseFloat(price_unit_sale.val()) - parseFloat(price_unit_sale.val()) / 1.12)).toFixed(2))
+        price_sale = $(elemento).parent().parent().find("td:eq(9)").find("span")
+        price_sale.text((parseFloat(price_unit_sale.val()) + parseFloat(iva_unit_sale.text())).toFixed(2))
+
+        quantity = $(elemento).parent().parent().find("td:eq(3)").find("#quantity").val()
+        pricet_buy = $(elemento).parent().parent().find("td:eq(9)").find("#pricet_buy")
+        pricet_buy.text((parseFloat(quantity) * parseFloat(price_unit_buy)).toFixed(2))
+
+        sumar_totales(elemento)
+    }
+
+    $(document).ready(function () {
+        $("input[type='button']").click(function () {
+            if ($("input[name='benefit']:checked").val() == 1) {
+                alert("Your are a - " + radioValue);
+            }
+        });
+
+        //$(document).bind("contextmenu",function(e){
+        //    return false;
+        //});
+
+        $("#search_ps").focus();
+
+        $("#quantity").keypress(function () {
+            alert("Handler for .keypress() called.");
+        });
+
+        $('#quantity').on('keypress', function () {
+            //var elemento = $(this).parent().parent().find("td:eq(1)").find("div").find("select").val();
+            console.log('ingreso a método change')
+
+        })
+
+        $('#provider').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/provider/search/' + request.query,
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        console.log(JSON.stringify(data))
+                        response.call(this, $.map(data, function (item) {
+                            return {
+                                label: item.user_enterprise.name,
+                                value: item.user_enterprise.id
+                                //text: item.interno
+                            };
+                        }));
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                console.log(ui.data('value'));
+                var provider = callWS('/larisa/api/v1/provider/' + ui.data('value'))
+                console.log(JSON.stringify(provider))
+                $('#identifier').val(provider.user_enterprise.identifier)
+                if (provider.user_enterprise.ubication != null) {
+                    $('#direction').val(provider.user_enterprise.ubication.mainStreet + ' ' + provider.user_enterprise.ubication.houseNumber + ' y ' + provider.user_enterprise.ubication.secondaryStreet)
+                    telephone = ''
+                    if (provider.user_enterprise.cellphone != null)
+                        telephone = provider.user_enterprise.cellphone
+                    if (provider.user_enterprise.telephone != null) {
+                        if (telephone != '')
+                            telephone += ' - '
+                        telephone += provider.user_enterprise.telephone;
+                    }
+                    $('#telephone').val(telephone)
+                    $('#email').val(provider.user_enterprise.email)
+                }
+                $("#search_ps").focus()
+            }
+        });
+
+        $('#search_ps').puiautocomplete({
+            effect: 'fade',
+            effectSpeed: 'fast',
+            minQueryLength: 3,
+            forceSelection: true,
+            //delay: 100,
+            completeSource: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: '/larisa/api/v1/article/search/' + request.query + '/1',
+                    dataType: "json",
+                    contentType: "application/json",
+                    context: this,
+                    autoFocus: true,
+                    success: function (data) {
+                        $('#search_ps').val('')
+                        console.log(JSON.stringify(data))
+
+                        if (data.length == 1) {
+                            select_product(data[0].code, data[0].name, data[0].stock, data[0].id, data[0].sale_price)
+                        } else {
+                            response.call(this, $.map(data, function (item) {
+                                return {
+                                    label: item.name + ' ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
+                                    value: item.id,
+                                    name: item.name,
+                                    unit: item.measure.name,
+                                    price: item.price,
+                                    code: item.code
+                                };
+                            }));
+                        }
+                    },
+                    error: function (request, status, error) {
+                    }
+                });
+            },
+            select: function (event, ui) {
+                console.log("select")
+                select_product(ui.data('code'), ui.data('name'), ui.data('unit'), ui.data('value'), ui.data('price'));
+            }
+        });
+    });
+
+    function select_product(code, name, unit, value, price) {
+        console.log('name: ' + name, ', code: ' + code + ', unit: ' + unit, ', value: ' + value, ', price: ' + price)
+        quantity = 1
+        existe = false
+        $(".registro").each(function (i) {
+            if ($(this).find('td:eq(0)').find('#code').val() == code) {
+                quantity_add = parseInt($(this).find("td:eq(3)").find("#quantity").val()) + 1
+                $(this).find("td:eq(3)").find("#quantity").val(quantity_add)
+                existe = true
+                calculate_total($(this).find("td:eq(3)").find("#quantity"))
+            }
+        })
+        if (existe == false) {
+            var item = '<tr style="background-color: cornsilk;" class="registro right-align">' +
+                '                    <td style="padding-bottom:1px;"><a data-balloon-length="medium"' +
+                '                                                                       data-tooltip="Eliminar item"' +
+                '                                                                       data-balloon-pos="left" class="" ' +
+                '                                                       style="margin-top:5px;cursor:pointer;" onclick="eliminar_item( this )" ><span style="margin-top:-10px;"><i class="material-icons">delete_forever</i></span></a>' +
+                '                        <input type="hidden" name="id_ps" id="id_ps" value="' + value + '"/>' +
+                '                        <input type="hidden" name="code" id="code" value="' + code + '"/>' +
+                '                    </td>' +
+                '                    <td class="">' +
+                '                        <span><a href="#">' + name + '</a></span>' +
+                '                    </td>' +
+                '                    <td style="padding-bottom:1px;">' +
+                '                        <input type="text" id="f_expiration" name="f_expiration" style="width: 100%; height:15px;margin-top:-15px;"/>' +
+                '                    </td>' +
+                '                    <td style="padding-bottom:1px;text-align:right;">' +
+                '                        <input type="number"  onchange="calculate_total(this);" onkeyup="calculate_total(this);" id="quantity" name="quantity" value="1" style="width: 50%; height:15px;margin-top:-15px; text-align:right;"/>' +
+                '                    </td>' +
+                '                    <td style="padding-bottom:1px;">' +
+                '                        <input type="number" onchange="calculate_total(this);" onkeyup="calculate_total(this);" id="priceu_buy" name="priceu_buy" style="width: 100%; height:15px;margin-top:-15px; text-align:right;" />' +
+                '                    </td>' +
+                '                    <td style="">' +
+                '                        <span id="iva_unit_buy" class="pull-right"></span>' +
+                '                    </td>' +
+                '                    <td style="">' +
+                '                        <span id="pricet_buy" class="suma_total new badge red pull-right" data-badge-caption=""></span>' +
+                '                    </td>' +
+
+                '                    <td style="padding-bottom:1px;">' +
+                '                        <input type="number"  onchange="calculate_total(this);" onkeyup="calculate_total(this);" id="priceu_sale" name="priceu_sale" style="width: 100%; height:15px;margin-top:-15px; text-align:right;"/>' +
+                '                    </td>' +
+                '                    <td style="" >' +
+                '                        <span id="iva_unit_sale" class="pull-right"></span>' +
+                '                    </td>' +
+                '                    <td style="" class="pull-right">' +
+                '                        <span id="pricet_sale" class=" new badge blue pull-right" data-badge-caption=""></span>' +
+                '                    </td>' +
+                '                </tr>'
+            //$('#factura tr:last').after(item)
+            //$("#factura tbody:nth-child(1)").after(item)
+            $('#factura > tbody').prepend(item)
+            //$('#id_ps').val(value)
+            $('#priceu_buy').val((price / 1.12).toFixed(2))
+
+            var iva_unit_buy = ($('#priceu_buy').val() * 0.12).toFixed(2)
+            console.log("iva_unit_buy: " + iva_unit_buy)
+            $('#iva_unit_buy').text(iva_unit_buy)
+
+            $('#price_buy').text((parseFloat($('#priceu_buy').val()) + parseFloat(iva_unit_buy)))
+
+            $('#pricet_buy').text($('#priceu_buy').val() * $('#quantity').val())
+            //sumar_totales($('#quantity'))
+            calculate_total($('#quantity'))
+        }
+
+
+        if ($("#factura tbody tr").length == 1)
+            $('#factura').css("display", "block")
+
+    }
+
+    function sumar_totales(element) {
+        console.log("*****quantity= " + $(element).parent().parent().find("td:eq(3)").find("#quantity").val())
+        var sum = 0;
+        $(".suma_total").each(function (i) {
+            sum += parseFloat($(this).text());
+            console.log("suma: " + sum)
+            qt = $(this).parent().parent().find("td:eq(3)").find("#quantity")
+            if (qt.is($(element))) {
+                console.log("if: " + $(this).val() + " - " + $(element).val())
+                //$(this).parent().parent().addClass("blink")
+                $(this).parent().parent().css('background-color', 'cornsilk')
+                $(this).parent().parent().find("td:eq(3)").find("#quantity").removeProp("readonly");
+            } else {
+                console.log("else: " + $(this).val() + " - " + $(element).val())
+                //$(this).parent().parent().removeClass("blink")
+                $(this).parent().parent().find("td:eq(3)").find("#quantity").attr("readonly", "true")
+                $(this).parent().parent().css('background-color', '')
+            }
+        });
+
+        $("#subtotal_general").text(sum.toFixed(2));
+        $("#iva_general").text((sum * 0.12).toFixed(2));
+        $("#total_pay").text((parseFloat($("#subtotal_general").text()) + parseFloat($("#iva_general").text())).toFixed(2));
+        $('#total_text').text(NumeroALetras($("#total_pay").text()))
+    }
+
+    function eliminar_item(element) {
+        swal({
+            title: "¿Eliminar item seleccionado?",
+            text: "Confirme que desea eliminar el registro seleccionado!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $(element).parent().parent().remove()
+                calculate_total(element)
+                swal("El item seleccionado ha sido eliminado", {
+                    icon: "success",
+                });
+            } else {
+                swal("No se ha podido eliminar el item seleccionado");
+            }
+        });
+    }
+</script>
+</body>
+</html>

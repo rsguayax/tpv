@@ -2,6 +2,8 @@ package com.larisa.plus.controller;
 
 import com.larisa.plus.model.enterprise.Enterprise;
 import com.larisa.plus.model.enterprise.EnterpriseRepository;
+import com.larisa.plus.model.user.UserEnterprise;
+import com.larisa.plus.model.user.UserEnterpriseRepository;
 import com.larisa.plus.model.user.UserRepository;
 import com.larisa.plus.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class IndexController {
     private EnterpriseRepository entRep;
     @Autowired
     private UserRepository userRep;
+    @Autowired
+    private UserEnterpriseRepository uenRep;
+
 
     @RequestMapping("/")
     public ModelAndView login(Model model){
@@ -62,6 +67,9 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         model.addAttribute("user",userDetails);
+        int enterprise_id = 1;//LAVADORA EL REY
+        UserEnterprise ue = uenRep.findByUser_IdAndEnterprise_Id(userDetails.getId(), enterprise_id);
+        model.addAttribute("ue", ue);
         ModelAndView mv = new ModelAndView("index/home");
         return mv;
     }

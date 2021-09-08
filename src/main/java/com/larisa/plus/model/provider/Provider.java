@@ -1,74 +1,61 @@
 package com.larisa.plus.model.provider;
 
 import com.larisa.plus.model.config.BaseEntity;
+import com.larisa.plus.model.user.SocialWeb;
 import com.larisa.plus.model.user.Ubication;
 import com.larisa.plus.model.user.User;
 import com.larisa.plus.model.catalog.ItemCatalog;
+import com.larisa.plus.model.user.UserEnterprise;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Provider extends BaseEntity {
+    /*La lista de proveedores de cada sucursal, lo sacamos de las compras*/
 
     @ManyToOne
-    @JoinColumn(name = "user")
-    //@JsonBackReference
-    private User user;
+    @JoinColumn(name = "user_enterprise")
+    private UserEnterprise user_enterprise;
 
     /**
      * Get list Activities of RUc in SRI
      */
     @ManyToOne
-    @JoinColumn(name = "measure")
-    private ItemCatalog servicio;
+    @JoinColumn(name = "service")
+    private ItemCatalog service;
 
     @ManyToOne
-    @JoinColumn(name="ubication")
-    private Ubication ubication;
+    @JoinColumn(name = "status")
+    private ItemCatalog status;
 
-    private boolean status;
     private Date register;
 
     public Provider() {
     }
 
-    public Provider(ItemCatalog servicio, Ubication ubication, boolean status) {
-        this.servicio = servicio;
-        this.ubication = ubication;
+    public UserEnterprise getUser_enterprise() {
+        return user_enterprise;
+    }
+
+    public void setUser_enterprise(UserEnterprise user_enterprise) {
+        this.user_enterprise = user_enterprise;
+    }
+
+    public ItemCatalog getService() {
+        return service;
+    }
+
+    public void setService(ItemCatalog service) {
+        this.service = service;
+    }
+
+    public ItemCatalog getStatus() {
+        return status;
+    }
+
+    public void setStatus(ItemCatalog status) {
         this.status = status;
-    }
-
-    public Provider(User user, Date register) {
-        this.user = user;
-        this.register = register;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ItemCatalog getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(ItemCatalog servicio) {
-        this.servicio = servicio;
-    }
-
-    public Ubication getUbication() {
-        return ubication;
-    }
-
-    public void setUbication(Ubication ubication) {
-        this.ubication = ubication;
     }
 
     public Date getRegister() {
@@ -77,13 +64,5 @@ public class Provider extends BaseEntity {
 
     public void setRegister(Date register) {
         this.register = register;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 }

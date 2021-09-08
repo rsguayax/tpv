@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<div class="" style="margin: 20px 20px 20px 20px;">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-12">
+            <div class="label"
+                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                Listado de Compras.
+                <a href="../buy/-1" class="btn-floating btn-small waves-effect waves-light green modal-trigger"><i
+                        class="material-icons">add</i></a>
+            </div>
+            <table id="datos" class="responsive-table stripe">
+                <thead>
+                <th style="width: 5%;"></th>
+                <th style="width: 20%;">Nombre</th>
+                <th style="width: 30%;">Descripción</th>
+                <th style="width: 15%;">Usuario</th>
+                <th style="width: 10%;">Iva</th>
+                <th style="width: 10%;">Total
+                <th style="width: 10%;">Fecha de compra</th>
+                </thead>
+                <tbody th:each="buy : ${buys}">
+                <td><a th:href="${'../buy/'+ buy.id}" class="waves-effect waves-light modal-trigger">
+                    <i class="material-icons">edit</i>
+                </a></td>
+                <td th:text="${buy.name}"></td>
+                <td th:text="${buy.description}"></td>
+                <td th:text="${buy.user_enterprise.name}"></td>
+                <td th:text="${buy.iva}"></td>
+                <td th:text="${buy.total}"></td>
+                <td th:text="${buy.buy_date}"></td>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+<th:block th:include="fragments/footer :: footer"></th:block>
+<script>
+    /*
+        $(document).ready(function () {
+            $('#datos').DataTable({
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                }
+            });
+        });*/
+</script>
+<script>
+    $(document).ready(function () {
+        //tabla('datos');
+    });
+</script>
+</body>
+</html>
