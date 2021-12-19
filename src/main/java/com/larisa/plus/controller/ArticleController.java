@@ -134,11 +134,13 @@ public class ArticleController {
         as.setStatus(icRep.findById(12)); //REGISTRO ACTIVO = 12
         as.setSale_price(new BigDecimal(Double.parseDouble(req.getParameter("saleprice"))));
         as.setBuy_price(new BigDecimal(Double.parseDouble(req.getParameter("buyprice"))));
-        if (req.getParameterMap().containsKey("status")) {
+
+        as.setStatus(icRep.findById(12));//activo
+/*        if (req.getParameterMap().containsKey("status")) {
             as.setStatus(icRep.findById(12));//activo
         }else{
             as.setStatus(icRep.findById(13));//inactivo
-        }
+        }*/
         asuRep.save(as);
 
         return "redirect:edit/"+ as.getCode();

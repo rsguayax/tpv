@@ -53,10 +53,10 @@ public class ArticleSucursal extends BaseEntity {
     /*this field will know calculate the total gain in this buy*/
 /*    @Column(precision=10, scale=2)
     private double sale_price;*/
-    @Column(nullable= true, precision=10, scale=2)    // Creates the database field with this size.
+    @Column(nullable= true, precision=10, scale=4)    // Creates the database field with this size.
     private BigDecimal sale_price;
 
-    @Column(nullable= true, precision=10, scale=2)    // Creates the database field with this size.
+    @Column(nullable= true, precision=10, scale=4)    // Creates the database field with this size.
     private BigDecimal buy_price;
 
 /*    @Column(precision=10, scale=2)

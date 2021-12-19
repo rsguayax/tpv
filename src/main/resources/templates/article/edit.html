@@ -85,6 +85,20 @@
             <label for="icon_prefix">Descripción</label>
         </div>
     </div>
+        <div class="row">
+            <div class="col s4"></div>
+            <div class="col s4"></div>
+            <div class="col s4">
+                <div class="row">
+                    <div class="col s6 alert alert-success">
+                        Utilidad <span id="utilidad" class="chip">0</span> %
+                    </div>
+                    <div class="col s6 alert alert-success">
+                        Ganancia $ <span id="ganancia" class="chip">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="row">
         <div class="input-field col s4">
             <i class="material-icons prefix">add_shopping_cart</i>
@@ -94,15 +108,15 @@
         </div>
         <div class="input-field col s4">
             <i class="material-icons prefix btn btn-sm red">attach_money</i>
-            <input th:if="${asu == null}" id="buyprice" name="buyprice" type="number" class="validate" style="padding-left:10px;" required>
-            <input th:if="${asu != null}" id="buyprice" name="buyprice" th:value="${asu.buy_price}" type="number" class="validate" style="padding-left:10px;" required>
-            <label for="icon_prefix">Precio de compra</label>
+            <input th:if="${asu == null}" id="buyprice" name="buyprice" type="text" class="validate" style="padding-left:10px;" required>
+            <input th:if="${asu != null}" id="buyprice" name="buyprice" th:value="${asu.buy_price}" type="text" class="validate" style="padding-left:10px;" required>
+            <label for="icon_prefix">Precio de compra (sin iva)</label>
         </div>
         <div class="input-field col s4">
             <i class="material-icons prefix btn btn-sm blue">attach_money</i>
-            <input th:if="${asu == null}" id="saleprice" name="saleprice" type="number" class="validate" style="padding-left:10px;" required>
-            <input th:if="${asu != null}" id="saleprice" name="saleprice" th:value="${asu.sale_price}" type="number" class="validate" style="padding-left:10px;" required>
-            <label for="icon_prefix">Precio de venta</label>
+            <input th:if="${asu == null}" id="saleprice" name="saleprice" type="text" class="validate" style="padding-left:10px;" required>
+            <input th:if="${asu != null}" id="saleprice" name="saleprice" th:value="${asu.sale_price}" type="text" class="validate" style="padding-left:10px;" required>
+            <label for="icon_prefix">Precio de venta al público</label>
         </div>
     </div>
     <div class="row">
@@ -182,8 +196,26 @@
 
         $("#code").focus();
 
-        $("#quantity").keypress(function () {
-            alert("Handler for .keypress() called.");
+        $("#buyprice").keyup(function () {
+            //PV = PC / (1 - %)
+            precio_compra = parseFloat($('#buyprice').val()) + ( parseFloat($('#buyprice').val()) * 0.12 )//precio + 12%
+            precio_venta = precio_compra /  ( 1 - 0.2 )
+            $('#saleprice').val( precio_venta.toFixed(4)  )
+            ganancia = precio_venta - precio_compra
+            $('#ganancia').text( ganancia.toFixed(4) )
+            utilidad = ( ganancia / precio_venta ).toFixed(4)
+            $('#utilidad').text( utilidad )
+        });
+        $("#saleprice").keyup(function () {
+            //Utilidad = (Pv-PC) / PV
+            if( $('#buyprice').val() != ''){
+                precio_compra = parseFloat($('#buyprice').val()) + ( parseFloat($('#buyprice').val()) * 0.12 )//precio + 12%
+                precio_venta = parseFloat( $("#saleprice").val() )
+                ganancia =  precio_venta - precio_compra
+                $('#ganancia').text( ganancia.toFixed(4) )
+                utilidad = ( (ganancia / precio_venta)*100 ).toFixed(4)
+                $('#utilidad').text( utilidad )
+            }
         });
 
         $('#quantity').on('keypress', function () {
