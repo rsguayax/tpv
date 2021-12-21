@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<div class="container" style="">
+    <div class="row" style="margin-top: 50px; margin-left:-40px;">
+        <div class="col s12 m12">
+            <div class="label"
+                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                Reporte Diario de Caja.
+            </div>
+            <div class="pull-right well" style="font-weight:bold; font-size: 40px;" >
+                Total ventas: $<span th:text="${total_ventas}"></span>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="width:15;">Sucursal</th>
+                        <th style="width:15;">Cajero</th>
+                        <th style="width:15;">Cliente</th>
+                        <th style="width:15;">Fecha Venta</th>
+                        <th style="width:15;">Tipo de Documento</th>
+                        <th style="width:15;">Tipo de Pago</th>
+                        <th style="width:10;">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="sale : ${sales}">
+                            <th th:text="${sale.sucursal.enterprise.name}"></th>
+                            <th th:text="${sale.cashier.user_enterprise.user.name}"></th>
+                            <th th:text="${sale.client.user_enterprise.user.name + ' ' + sale.client.user_enterprise.user.lastName}"></th>
+                            <th th:text="${sale.sale_date}"></th>
+                            <th th:text="${sale.document_type.name}"></th>
+                            <th th:text="${sale.way_pay.name}"></th>
+                            <th th:text="${sale.total}"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

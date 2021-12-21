@@ -18,105 +18,211 @@
 </head>
 <body class="marca_agua">
 <th:block th:include="fragments/header :: header"></th:block>
-<div class="container" style="">
-    <div class="row" style="margin-top: 50px; margin-left:-40px;">
-        <div class="col s12 m12">
-            <div class="label"
-                 style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
-                Facturación.
-            </div>
 
-            <table id="datos" class="responsive-table" style="line-height: 1px; width: 100%;">
-                <tbody>
-                <tr class="" style="">
-                    <td style="">Cliente:</td>
-                    <td colspan="3" class="" style="padding-bottom:1px;">
-                        <input type="hidden" id="client_id" name="client_id" value="-1">
-                        <input type="text" id="client" name="client" class="autocomplete"
-                               placeholder="Ingresese nro. de identificación o nombres"
-                               style="height:30px; width:80%; font-weight: bold; background-color: #F5F8FA; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 10px;"
-                               required="true"/>
-                        <a href="../client/edit/" onclick="location.href=this.href + $('#client_id').val();return false;" class="btn btn-floating btn-small red tooltipped modal-trigger"
-                           data-tooltip="Cliente" data-position="left"> <i
-                                class="material-icons">edit</i> </a>
-                    </td>
-                </tr>
-                <tr style="">
-                    <td style="width: 15%;">Identificación:</td>
-                    <td style="width: 35%; opacity: 0.5;"><span id="identifier" class="text-muted"></span></td>
-                    <td style="width: 15%;">Dirección:</td>
-                    <td style="width: 35%; opacity: 0.5;"><span id="direction"></span></td>
-                </tr>
+<form action="facturar" id="form_factura" method="post">
+    <div class="container" style="">
+        <div class="row" style="margin-top: 50px; margin-left:-40px;">
+            <div class="col s12 m12">
+                <div class="label"
+                     style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                    Facturación.
+                </div>
+
+                <table id="datos" class="responsive-table" style="line-height: 1px; width: 100%;">
+                    <tbody>
+                    <tr class="" style="">
+                        <td style="">Cliente:</td>
+                        <td colspan="3" class="" style="padding-bottom:1px;">
+                            <input type="hidden" id="client_id" name="client_id" value="-1">
+                            <input type="text" id="client" name="client" class="autocomplete"
+                                   placeholder="Ingresese nro. de identificación o nombres"
+                                   style="height:30px; width:80%; font-weight: bold; background-color: #F5F8FA; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 10px;"
+                                   required="true"/>
+                            <a href="../client/edit/" onclick="location.href=this.href + $('#client_id').val();return false;" class="btn btn-floating btn-small red tooltipped modal-trigger"
+                               data-tooltip="Cliente" data-position="left"> <i
+                                    class="material-icons">edit</i> </a>
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="width: 15%;">Identificación:</td>
+                        <td style="width: 35%; opacity: 0.5;"><span id="identifier" class="text-muted"></span></td>
+                        <td style="width: 15%;">Dirección:</td>
+                        <td style="width: 35%; opacity: 0.5;"><span id="direction"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Correo:</td>
+                        <td style="opacity: 0.5;"><span id="email"></span></td>
+                        <td>Teléfono:</td>
+                        <td style="opacity: 0.5;"><span id="telephone"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Tipo Documento:</td>
+                        <td colspan="3">
+                            <span>
+                                <label>
+                                    <input class="with-gap" name="document_type" value="5" type="radio" checked />
+                                    <span>Factura</span>
+                                </label>
+                            </span>
+                            <span>
+                                <label>
+                                    <input class="with-gap" name="document_type" value="59" type="radio" />
+                                    <span>Proforma</span>
+                                </label>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m6  input-icons" style="margin-right: -20px;">
+            <i class="fa fa-tags fa-lg" aria-hidden="true" style="z-index:1000"></i>
+            <input type="text" id="search_ps" name="search_ps" class="input-field autocomplete validate "
+                   placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
+                   style="background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
+                   required="true" autofocus="true"/>
+        </div>
+
+        <div class="col s12 m6" style="margin-left: 20px;">
+            <span style="margin-left: 20px; padding: 5px;font-size:30px;">
+                Total a Pagar: $ <span id="total_a_pagar">0</span>
+                <input type="hidden" id="input_total_a_pagar" name="input_total_a_pagar">
+            </span>
+            <span class="right-align"
+                  style="border-right: 15px solid white; color:white; padding: 10px; background-color: cornflowerblue; border-right: lavenderblush 1px; border: solid 0px blue; border-radius: 0px 0px 0px 25px;">
+                            IVA: $ <span id="iva_general">0</span>
+                        </span>
+
+            <span class="right-align"
+                  style="color:white; padding: 10px; background-color: blue; border: solid 0px blue; border-radius: 0px 25px 0px 0px;">
+                            Subtotal: $ <span id="subtotal_general">0</span>
+                        </span>
+            <br/><br/>
+            <div class="divider" style="margin-left: 20px; margin-top: -14px;"></div>
+            <p id="total_text" class="" style=""></p>
+
+            <span class="pull-right">
+                <i class="fa fa-cogs fa-lg" aria-hidden="true" style="z-index:1000"></i>
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Procesar</a>
+            </span>
+        </div>
+    </div>
+
+    <div class="row" style="margin: -20px 20px 20px 20px;">
+        <div class="col s12 m12">
+            <table id="factura" class="responsive-table striped" style="display:none;line-height: 1px; width: 100%;">
+                <thead>
                 <tr>
-                    <td>Correo:</td>
-                    <td style="opacity: 0.5;"><span id="email"></span></td>
-                    <td>Teléfono:</td>
-                    <td style="opacity: 0.5;"><span id="telephone"></span></td>
+                    <th style="width: 5%;"></th>
+                    <th style="width: 45%;">Producto/Servicio</th>
+                    <th style="width: 10%;">Marca</th>
+                    <th style="width: 10%;">Medida</th>
+                    <th style="width: 10%;">Cantidad</th>
+                    <th style="width: 10%;">P. unitario</th>
+                    <th style="width: 10%;">V. Total</th>
                 </tr>
-                </tbody>
+                </thead>
+                <tbody></tbody>
             </table>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col s12 m6  input-icons" style="margin-right: -20px;">
-        <i class="fa fa-tags fa-lg" aria-hidden="true" style="z-index:1000"></i>
-        <input type="text" id="search_ps" name="search_ps" class="input-field autocomplete validate "
-               placeholder="buscar producto/servicio - LECTURA DE CÓDIGO DE BARRA"
-               style="background-color:cornsilk; height:30px; font-weight: bold; border-radius: 0px 25px 0px 25px;padding: 0px 10px 0px 30px; "
-               required="true" autofocus="true"/>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Facturar</h4>
+            <p>Confirmación de Factura</p>
+            <div class="well row" style="font-weight:bold; font-size:20px;">
+                <div class="col m3">
+                    Valor a Pagar: $
+                </div>
+                <div class="col m9">
+                    <span id="a_pagar_en_numeros"></span>
+                    <p id="a_pagar_en_letras"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m3">Forma de Pago</div>
+                <div class="col m3">
+                    <p>
+                        <label>
+                            <input class="with-gap" name="way_pay" value="8" type="radio" checked />
+                            <span>Efectivo</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input class="with-gap" name="way_pay" value="9" type="radio"  />
+                            <span>Transferencia</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input class="with-gap" name="way_pay" value="60" type="radio"  />
+                            <span>Crédito</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input class="with-gap" name="way_pay" value="11" type="radio"  />
+                            <span>Otro</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="col m6 well thumbnail" style="border-left: 2px solid blue;">
+                    <div class="alert alert-success">
+                        Recibo: $<input type="text" id="valor_recibido" onkeyup="calcular_cambio();" style="width:50%;" />
+                    </div>
+                    <div class="alert alert-danger" style="font-weight:bold; font-size:20px;">
+                        Cambio: $<span id="valor_cambio"></span>
+                        <div class="blink alert alert-danger" id="msg_factura" style="display:none; font-size: 14px;" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a style="cursor:pointer;" onclick="$('#form_factura').submit();" class="modal-close waves-effect waves-green btn-flat">
+                <i class="fa fa-handshake-o fa-lg" aria-hidden="true" style="z-index:1000"></i>
+                Enviar
+            </a>
+        </div>
     </div>
 
-    <div class="col s12 m6" style="margin-left: 20px;">
-        <span style="margin-left: 20px; padding: 5px;font-size:30px;">
-            Total a Pagar: $ <span id="total_a_pagar">0</span>
-        </span>
-        <span class="right-align"
-              style="border-right: 15px solid white; color:white; padding: 10px; background-color: cornflowerblue; border-right: lavenderblush 1px; border: solid 0px blue; border-radius: 0px 0px 0px 25px;">
-                        IVA: $ <span id="iva_general">0</span>
-                    </span>
-
-        <span class="right-align"
-              style="color:white; padding: 10px; background-color: blue; border: solid 0px blue; border-radius: 0px 25px 0px 0px;">
-                        Subtotal: $ <span id="subtotal_general">0</span>
-                    </span>
-        <br/><br/>
-        <div class="divider" style="margin-left: 20px; margin-top: -14px;"></div>
-        <p id="total_text" class="" style=""></p>
-    </div>
-</div>
-<div class="row" style="margin: -20px 20px 20px 20px;">
-    <div class="col s12 m12">
-        <table id="factura" class="responsive-table striped" style="display:none;line-height: 1px; width: 100%;">
-            <thead>
-            <tr>
-                <th style="width: 5%;"></th>
-                <th style="width: 45%;">Producto/Servicio</th>
-                <th style="width: 10%;">Medida</th>
-                <th style="width: 10%;">Cantidad</th>
-                <th style="width: 10%;">P. unitario</th>
-                <th style="width: 10%;">IVA</th>
-                <th style="width: 10%;">P. total</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-</div>
+</form>
+<!-- Modal Structure -->
 
 <th:block th:include="fragments/footer :: footer"></th:block>
 
 <script th:inline="javascript">
+    function calcular_cambio(){
+        valor_recibido = parseFloat( $('#valor_recibido').val() )
+        if( valor_recibido > 0){
+            $('#msg_factura').attr("style",'display:block')
+            valor_factura = parseFloat( $('#total_a_pagar').text() )
+            if(valor_recibido >= valor_factura ){
+                cambio = (valor_recibido - valor_factura).toFixed(2)
+                $("#valor_cambio").text( cambio )
+                $('#msg_factura').text( NumeroALetras( cambio ) )
+            }else{
+                $('#msg_factura').text('El valor recibido es menor al valor total de la factura')
+                $("#valor_cambio").text( '-' )
+            }
+        }
+    }
+
     function calculate_total(elemento) {
-        quantity = $(elemento).parent().parent().find("td:eq(3)").find("#quantity").val()
-        price_unit = $(elemento).parent().parent().find("td:eq(4)").find("#priceu").text()
+        quantity = $(elemento).parent().parent().find("td:eq(4)").find("#quantity").val()
+        price_unit = $(elemento).parent().parent().find("td:eq(5)").find("#priceu").text()
         //total price
         total_price = $(elemento).parent().parent().find("td:eq(6)").find("span")
-        total_price.text((quantity * price_unit).toFixed(2))
+        total_price.text((quantity * price_unit).toFixed(4))
 
-        iva = $(elemento).parent().parent().find("td:eq(5)").find("span")
-        iva.text((total_price.text() * 0.12).toFixed(2))
-        console.log("IVA: " + iva.text())
+        //iva = $(elemento).parent().parent().find("td:eq(5)").find("span")
+        //iva.text((total_price.text() * 0.12).toFixed(2))
+        //console.log("IVA: " + iva.text())
 
         sumar_totales(elemento)
     }
@@ -177,7 +283,11 @@
                 $('#identifier').text(client.user_enterprise.identifier)
                 if (client.user_enterprise.ubication != null) {
                     //$('#direction').text(client.user_enterprise.ubication.mainStreet + ' ' + client.user_enterprise.ubication.houseNumber + ' y ' + client.user_enterprise.ubication.secondaryStreet)
-                    $('#direction').text(client.user_enterprise.ubication.parroquia.name + ', ' + client.user_enterprise.ubication.description)
+                    parroquia = ''
+                    if( client.user_enterprise.ubication.parroquia != null){
+                        parroquia = client.user_enterprise.ubication.parroquia.name + '. ' ;
+                    }
+                    $('#direction').text( parroquia + client.user_enterprise.ubication.description)
                     telephone = ''
                     if (client.user_enterprise.cellphone != null)
                         telephone = client.user_enterprise.cellphone
@@ -214,16 +324,17 @@
                         console.log(JSON.stringify(data))
 
                         if (data.length == 1) {
-                            select_product(data[0].code, data[0].name + '. ' +  data[0].description, data[0].measure.name, data[0].id, data[0].sale_price)
+                            select_product(data[0].code, data[0].name + '. ' +  data[0].mark.name + '. '+data[0].description, data[0].mark.name, data[0].measure.name, data[0].id, data[0].sale_price)
                         } else {
                             response.call(this, $.map(data, function (item) {
                                 return {
-                                    label: item.name + ' ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
+                                    label: item.name + '. ' + item.mark.name +' ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
                                     value: item.id,
                                     name: item.name + '. ' +  data[0].description,
                                     measure: item.measure.name,
                                     price: item.sale_price,
-                                    code: item.code
+                                    code: item.code,
+                                    mark: item.mark.name
                                 };
                             }));
                         }
@@ -235,23 +346,23 @@
             select: function (event, ui) {
                 console.log("select")
                 console.log(ui.data())
-                select_product(ui.data('code'), ui.data('name') , ui.data('measure'), ui.data('value'), ui.data('price'));
+                select_product(ui.data('code'), ui.data('name') , ui.data('mark'), ui.data('measure'), ui.data('value'), ui.data('price'));
             }
         });
     });
 
-    function select_product(code, name, unit, value, price) {
+    function select_product(code, name, mark, unit, value, price) {
         console.log('name: ' + name, ', code: '+ code + ', unit: ' + unit, ', value: ' + value, ', price: ' + price)
         quantity = 1
         existe = false
         $(".registro").each(function (i) {
             console.log("CODE: " + $(this).find('td:eq(0)').find('#code').val() + " == " + code)
             console.log("PRICE: " + $(this).find('td:eq(3)').find('#priceu').val() + " == " + (price / 1.12).toFixed(2))
-            if ($(this).find('td:eq(0)').find('#code').val() == code && $(this).find('td:eq(4)').find('#priceu').text() == (price / 1.12).toFixed(4)) {
-                quantity_add = parseInt($(this).find("td:eq(3)").find("#quantity").val()) + 1
-                $(this).find("td:eq(3)").find("#quantity").val(quantity_add)
+            if ($(this).find('td:eq(0)').find('#code').val() == code){// && $(this).find('td:eq(5)').find('#priceu').text() == (price / 1.12).toFixed(4)) {
+                quantity_add = parseInt($(this).find("td:eq(4)").find("#quantity").val()) + 1
+                $(this).find("td:eq(4)").find("#quantity").val(quantity_add)
                 existe = true
-                calculate_total($(this).find("td:eq(3)").find("#quantity"))
+                calculate_total($(this).find("td:eq(4)").find("#quantity"))
             }
         })
         if (existe == false) {
@@ -267,6 +378,9 @@
                 '                        <a href="../article/edit/'+ code + '" target="_blank">' + name + '</a>' +
                 '                    </td>' +
                 '                    <td>' +
+                '                        <span>' + mark + '</span>' +
+                '                    </td>' +
+                '                    <td>' +
                 '                        <span>' + unit + '</span>' +
                 '                    </td>' +
                 '                    <td style="padding-bottom:1px;">' +
@@ -274,9 +388,6 @@
                 '                    </td>' +
                 '                    <td>' +
                 '                        <span id="priceu"></span>' +
-                '                    </td>' +
-                '                    <td>' +
-                '                        <span id="iva"></span>' +
                 '                    </td>' +
                 '                    <td>' +
                 '                        <span id="pricet" class="suma_total"></span>' +
@@ -288,10 +399,6 @@
             //$('#id_ps').val(value)
             $('#priceu').text((price / 1.12).toFixed(4))
             $('#pricet').text($('#priceu').text() * $('#quantity').val())
-            console.log('quantity: ' + $('#quantity').val())
-            console.log('priceu: ' + $('#priceu').text())
-            var iva = ($('#pricet').text() * 0.12).toFixed(4)
-            $('#iva').text(iva)
             sumar_totales($('#quantity'))
         }
 
@@ -302,29 +409,33 @@
     }
 
     function sumar_totales(element) {
-        console.log("*****quantity= " + $(element).parent().parent().find("td:eq(3)").find("#quantity").val())
         var sum = 0;
         $(".suma_total").each(function (i) {
             sum += parseFloat($(this).text());
             console.log("suma: " + sum)
-            qt = $(this).parent().parent().find("td:eq(3)").find("#quantity")
+            qt = $(this).parent().parent().find("td:eq(4)").find("#quantity")
             if (qt.is($(element))) {
                 console.log("if: " + $(this).val() + " - " + $(element).val())
                 $(this).parent().parent().addClass("blink")
                 $(this).parent().parent().css('background-color', 'cornsilk')
-                $(this).parent().parent().find("td:eq(3)").find("#quantity").removeProp("readonly");
+                $(this).parent().parent().find("td:eq(4)").find("#quantity").removeProp("readonly");
             } else {
                 console.log("else: " + $(this).val() + " - " + $(element).val())
                 $(this).parent().parent().removeClass("blink")
-                $(this).parent().parent().find("td:eq(3)").find("#quantity").attr("readonly", "true")
+                $(this).parent().parent().find("td:eq(4)").find("#quantity").attr("readonly", "true")
                 $(this).parent().parent().css('background-color', '')
             }
         });
 
         $("#subtotal_general").text(sum.toFixed(4));
         $("#iva_general").text((sum * 0.12).toFixed(4));
-        $("#total_a_pagar").text((parseFloat($("#subtotal_general").text()) + parseFloat($("#iva_general").text())).toFixed(2));
+        $("#total_a_pagar").text( (parseFloat($("#subtotal_general").text()) + parseFloat($("#iva_general").text())).toFixed(2) );
         $('#total_text').text(NumeroALetras($("#total_a_pagar").text()))
+        $("#a_pagar_en_numeros").text( $("#total_a_pagar").text())
+        $('#a_pagar_en_letras').text( $('#total_text').text() )
+
+        $('#input_total_a_pagar').val( $("#total_a_pagar").text() )
+        calcular_cambio()
     }
 
     function eliminar_item(element) {

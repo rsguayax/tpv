@@ -70,8 +70,10 @@ public class ClientController {
         List<Parroquia> parroquias = new ArrayList<>();
         if(id != -1){//cliente existe
             client = cliRep.findById(id);
-            cantones = canRep.findByCity_Id(client.getUser_enterprise().getUbication().getParroquia().getCanton().getCity().getId());
-            parroquias = parRep.findByCanton_Id(client.getUser_enterprise().getUbication().getParroquia().getCanton().getId());
+            if(client.getUser_enterprise().getUbication().getParroquia() != null){
+                cantones = canRep.findByCity_Id(client.getUser_enterprise().getUbication().getParroquia().getCanton().getCity().getId());
+                parroquias = parRep.findByCanton_Id(client.getUser_enterprise().getUbication().getParroquia().getCanton().getId());
+            }
         }
         model.addAttribute("provincias", cityRep.findAll());
         model.addAttribute("cantones", cantones);
@@ -92,7 +94,14 @@ public class ClientController {
         int id_empresa = Integer.parseInt(req.getParameter("id_empresa"));
         int id_cliente = Integer.parseInt(req.getParameter("id_cliente"));
         UserEnterprise ue;
-        Ubication ubication;
+        Ubication ubication = new Ubication();
+        ubication.setRegister(new Date());
+        int parroquia = Integer.parseInt(req.getParameter("parroquia"));
+        if(parroquia != -1) {
+            ubication.setParroquia(parRep.findById( parroquia ));
+        }
+        ubication.setDescription(req.getParameter("direction"));
+        ubication = ubiRep.save(ubication);
         if(id_cliente == -1){//guardar nuevo cliente
             //Guardamos un usuario en la tabla global de usuarios
             User user = new User();
@@ -102,11 +111,6 @@ public class ClientController {
             user.setName(req.getParameter("name"));
             user.setLastName(req.getParameter("lastname"));
             user.setRegister(new Date());
-            ubication = new Ubication();
-            ubication.setRegister(new Date());
-            ubication.setParroquia(parRep.findById(Integer.parseInt(req.getParameter("parroquia"))));
-            ubication.setDescription(req.getParameter("direction"));
-            ubication = ubiRep.save(ubication);
             user.setUbication(ubication);
             usrRep.save(user);
             //Guardamos el usuario dentro de la empresa en contexto.
@@ -116,12 +120,11 @@ public class ClientController {
             ue.setUser(user);
             ue.setRegister(new Date());
         }else{//editamos cliente existente
-            //actualizamos en tabla user_enterprise
-            ue = useRep.findByUser_IdAndEnterprise_Id(userDetails.getId(), id_empresa);
-            ubication = ue.getUbication();
-            ubication.setParroquia(parRep.findById(Integer.parseInt(req.getParameter("parroquia"))));
-            ubication.setDescription(req.getParameter("direction"));
-            ubication = ubiRep.save(ubication);
+            Client client = cliRep.findById(id_cliente);
+            //actualizamos datos del cliente
+            //client.getUser_enterprise().setUbication(ubication);
+            //cliRep.save(client);
+            ue = client.getUser_enterprise();
         }
         ue.setCellphone(req.getParameter("cellphone"));
         ue.setEmail(req.getParameter("email"));
@@ -129,16 +132,18 @@ public class ClientController {
         ue.setName(req.getParameter("name"));
         ue.setLastName(req.getParameter("lastname"));
         ue.setUbication(ubication);
-        useRep.save(ue);
+        ue = useRep.save(ue);
+        //Guardamos datos del cliente cuando es nuevo
+        Client client;
         if(id_cliente == -1){
-            Client cliente = new Client();
-            cliente.setRegister(new Date());
-            cliente.setStatus(icRep.findById(12));//estado de registro ACTIVO
-            cliente.setUser_enterprise(ue);
-            cliRep.save(cliente);
-            id_cliente = cliente.getId();
+            client = new Client();
+            client.setRegister(new Date());
+            client.setStatus(icRep.findById(12));//estado de registro ACTIVO
+            client.setUser_enterprise(ue);
+            client = cliRep.save(client);
+            return "redirect:edit/"+ client.getId();
         }
-        return "redirect:edit/"+ id_cliente;
+        return "redirect:edit/"+id_cliente;
     }
 
 }

@@ -14,4 +14,6 @@ public interface ArticleSucursalRepository extends CrudRepository<ArticleSucursa
     ArticleSucursal findByArticle_IdAndSucursal_Id(int article, int sucursal);
 
     ArticleSucursal findByArticle_CodeAndSucursal_Id(String code, int sucursal);
+
+    ArticleSucursal findById(int id);
 }

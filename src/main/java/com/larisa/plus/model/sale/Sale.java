@@ -53,6 +53,10 @@ public class Sale extends BaseEntity {
     private Date quote_date;
     private Date register;
 
+    @ManyToOne
+    @JoinColumn(name = "way_pay")
+    private ItemCatalog way_pay;
+
     public Sale() {
     }
 
@@ -150,5 +154,13 @@ public class Sale extends BaseEntity {
 
     public void setRegister(Date register) {
         this.register = register;
+    }
+
+    public ItemCatalog getWay_pay() {
+        return way_pay;
+    }
+
+    public void setWay_pay(ItemCatalog way_pay) {
+        this.way_pay = way_pay;
     }
 }

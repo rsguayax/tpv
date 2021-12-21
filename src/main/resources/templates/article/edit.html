@@ -122,7 +122,7 @@
     <div class="row">
         <div class="col s4">
             <label>Marca</label>
-            <select class="browser-default" id="mark" name="mark">
+            <select class="browser-default" id="mark" name="mark" required>
                 <option value="" disabled selected>-----</option>
                 <div th:if="${asu == null}" th:each="e : ${marcas}">
                     <option th:value="${e.id}" th:text="${e.name}"/>
@@ -137,7 +137,7 @@
         </div>
         <div class="col s4">
             <label>Medida</label>
-            <select class="browser-default" id="measure" name="measure">
+            <select class="browser-default" id="measure" name="measure" required>
                 <option value="" disabled selected>-----</option>
                 <div th:if="${asu == null}" th:each="e : ${medidas}">
                     <option th:value="${e.id}" th:text="${e.name}"/>
@@ -152,7 +152,7 @@
         </div>
         <div class="col s4">
             <label>Categoría</label>
-            <select class="browser-default" id="category" name="category">
+            <select class="browser-default" id="category" name="category" required>
                 <option value="" disabled selected>-----</option>
                 <div th:if="${asu == null}" th:each="e : ${categorias}">
                     <option th:value="${e.id}" th:text="${e.name}"/>
