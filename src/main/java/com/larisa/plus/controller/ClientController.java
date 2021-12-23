@@ -112,6 +112,7 @@ public class ClientController {
             user.setLastName(req.getParameter("lastname"));
             user.setRegister(new Date());
             user.setUbication(ubication);
+            user.setUsername(req.getParameter("identifier"));
             usrRep.save(user);
             //Guardamos el usuario dentro de la empresa en contexto.
             //UserEnterprise es la tabla donde se trabajan los usuarios específicos a cada empresa.
