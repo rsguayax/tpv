@@ -81,11 +81,15 @@
                         <option th:value="${e.id}" th:text="${e.name}"/>
                     </div>
                     <div th:if="${client != null}" th:each="e : ${provincias}">
-                        <option th:if="${e.id != client.user_enterprise.ubication.parroquia.canton.city.id}" th:value="${e.id}"
-                                th:text="${e.name}"/>
-                        <option th:if="${e.id == client.user_enterprise.ubication.parroquia.canton.city.id}" th:value="${e.id}"
-                                th:text="${e.name}" selected="selected"/>
-                    </div>
+                        <div th:if="${client.user_enterprise.ubication.parroquia != null}">
+                            <option th:if="${e.id != client.user_enterprise.ubication.parroquia.canton.city.id}" th:value="${e.id}"
+                                    th:text="${e.name}"/>
+                            <option th:if="${e.id == client.user_enterprise.ubication.parroquia.canton.city.id}" th:value="${e.id}"
+                                    th:text="${e.name}" selected="selected"/>
+                        </div>
+                        <div th:if="${client.user_enterprise.ubication.parroquia == null}">
+                            <option th:value="${e.id}" th:text="${e.name}"/>
+                        </div>
                 </select>
             </div>
             <div class="col s4">
