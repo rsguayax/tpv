@@ -105,7 +105,7 @@ public class ApiRest {
 
     @RequestMapping("/article/search/{param}/{sucursal}")
     public List<ArticleSucursal> list_articles(@PathVariable("param") String param, @PathVariable("sucursal") int sucursal) {
-        List<ArticleSucursal> articles =  asRep.getArticles(param, param, sucursal);
+        List<ArticleSucursal> articles =  asRep.getArticles(param, param, param, sucursal);
         System.out.println("artículos encontados: "+articles.size());
         return articles;
     }

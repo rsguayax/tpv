@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface ArticleSucursalRepository extends CrudRepository<ArticleSucursal, Long> {
     /*Buscar artículos dentro de una sucursal*/
-    @Query("SELECT a FROM ArticleSucursal a WHERE (a.code like CONCAT('%',:code,'%') OR a.name like CONCAT('%',:name,'%')) AND a.sucursal.id =:id ORDER BY a.name")
-    public List<ArticleSucursal> getArticles(@Param("code") String code, @Param("name") String name, @Param("id") int id);
+    @Query("SELECT a FROM ArticleSucursal a WHERE (a.code like CONCAT('%',:code,'%') OR a.name like CONCAT('%',:name,'%') OR a.description like CONCAT('%',:description,'%')) AND a.sucursal.id =:id ORDER BY a.name")
+    public List<ArticleSucursal> getArticles(@Param("code") String code, @Param("name") String name, @Param("description") String description, @Param("id") int id);
 
     ArticleSucursal findByArticle_IdAndSucursal_Id(int article, int sucursal);
 

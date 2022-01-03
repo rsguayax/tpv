@@ -328,9 +328,9 @@
                         } else {
                             response.call(this, $.map(data, function (item) {
                                 return {
-                                    label: item.name + '. ' + item.mark.name +' ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
+                                    label: item.name + '. ' + item.mark.name +'. '+ item.description +'. ($ ' + item.sale_price + ') | (stock= ' + item.stock + ')',
                                     value: item.id,
-                                    name: item.name + '. ' +  data[0].description,
+                                    name: item.name + '. ' +  item.description,
                                     measure: item.measure.name,
                                     price: item.sale_price,
                                     code: item.code,
