@@ -49,6 +49,7 @@ public class Sale extends BaseEntity {
     /*Esta fecha se guarda cuando se realiza la venta, ya que previo a la venta el registro puede ser solo una cotización
     * Cuando se trata solo de una cotización, no se afecta el stock de los artículos.
     * */
+    @JoinColumn(name = "sale_date")
     private Date sale_date;
     private Date quote_date;
     private Date register;

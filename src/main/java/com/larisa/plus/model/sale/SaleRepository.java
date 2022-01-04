@@ -8,4 +8,7 @@ import java.util.List;
 public interface SaleRepository extends CrudRepository<Sale, Long> {
 
     //List<Sale> findBySale_date(Date fecha);
+
+    //List<Sale> findBySale_date(String date);
+
 }

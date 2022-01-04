@@ -115,16 +115,34 @@ public class SaleController {
         return "redirect:sale/";
     }
 
-    //@GetMapping("/list/{fecha_venta}/{tipo_pago}")
+   // @GetMapping("/list/{current_date}")
     @GetMapping("/list")
-    public ModelAndView getSales(Model model){
-        List<Sale> sales = (List<Sale>)salRep.findAll();
+    public ModelAndView getSales(Model model){ //, @PathVariable("current_date") String fecha_actual
+        List<Sale> sales =  (List<Sale>)salRep.findAll();// (List<Sale>)salRep.findBySale_date(fecha_actual);
+
         double total_ventas = 0;
+
+        double total_efectivo = 0;
+        double total_credito = 0;
+        double total_transferencia = 0;
+
         for (Sale s : sales){
             total_ventas+=s.getTotal();
+            if(s.getWay_pay().getId() == 8){
+                total_efectivo+=s.getTotal();
+            }else if(s.getWay_pay().getId() == 60){
+                total_credito+=s.getTotal();
+            }else if(s.getWay_pay().getId() == 9){
+                total_transferencia+=s.getTotal();
+            }
         }
         model.addAttribute("sales", sales);
-        model.addAttribute("total_ventas", total_ventas);
+        model.addAttribute("total_ventas", String.format("%.2f", total_ventas));
+
+        model.addAttribute("total_efectivo", String.format("%.2f", total_efectivo));
+        model.addAttribute("total_credito", String.format("%.2f", total_credito));
+        model.addAttribute("total_transferencia", String.format("%.2f", total_transferencia));
+
         ModelAndView mv = new ModelAndView("sale/list");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();

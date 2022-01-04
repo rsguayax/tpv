@@ -28,34 +28,86 @@
             <div class="pull-right well" style="font-weight:bold; font-size: 40px;" >
                 Total ventas: $<span th:text="${total_ventas}"></span>
             </div>
-            <div>
-                <table>
+        </div>
+        </br>
+        <div class="col s12 m4">
+            <div class="chip" style="font-weight:bold;">
+                PAGO EN EFECTIVO: $<span th:text="${total_efectivo}"></span>
+            </div>
+            <div  class="thumbnail">
+                <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th style="width:15;">Sucursal</th>
-                        <th style="width:15;">Cajero</th>
-                        <th style="width:15;">Cliente</th>
-                        <th style="width:15;">Fecha Venta</th>
-                        <th style="width:15;">Tipo de Documento</th>
-                        <th style="width:15;">Tipo de Pago</th>
-                        <th style="width:10;">Total</th>
+                        <th style="width:25%;">Cajero</th>
+                        <th style="width:25%;">Cliente</th>
+                        <th style="width:20%;">Fecha Venta</th>
+                        <th style="width:20%;">Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="sale : ${sales}">
-                            <th th:text="${sale.sucursal.enterprise.name}"></th>
+                        <tr th:each="sale : ${sales}" th:if="${sale.way_pay.id == 8}">
                             <th th:text="${sale.cashier.user_enterprise.user.name}"></th>
                             <th th:text="${sale.client.user_enterprise.user.name + ' ' + sale.client.user_enterprise.user.lastName}"></th>
-                            <th th:text="${sale.sale_date}"></th>
-                            <th th:text="${sale.document_type.name}"></th>
-                            <th th:text="${sale.way_pay.name}"></th>
+                            <th th:text="${#dates.format(sale.sale_date, 'dd-MMM-yyyy HH:mm')}"></th>
                             <th th:text="${sale.total}"></th>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
         </div>
+
+        <div class="col s12 m4">
+            <div class="chip" style="font-weight:bold;">
+                CRÉDITO EL REY: $<span th:text="${total_credito}"></span>
+            </div>
+            <div class="thumbnail">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:15;">Cajero</th>
+                        <th style="width:15;">Cliente</th>
+                        <th style="width:15;">Fecha Venta</th>
+                        <th style="width:10;">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sale : ${sales}" th:if="${sale.way_pay.id == 60}">
+                        <th th:text="${sale.cashier.user_enterprise.user.name}"></th>
+                        <th th:text="${sale.client.user_enterprise.user.name + ' ' + sale.client.user_enterprise.user.lastName}"></th>
+                        <th th:text="${#dates.format(sale.sale_date, 'dd-MMM-yyyy HH:mm')}"></th>
+                        <th th:text="${sale.total}"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col s12 m4">
+            <div class="chip" style="font-weight:bold;">
+                TRANSFERENCIA BANCARIA: $<span th:text="${total_transferencia}"></span>
+            </div>
+            <div class="thumbnail">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th style="width:15;">Cajero</th>
+                        <th style="width:15;">Cliente</th>
+                        <th style="width:15;">Fecha Venta</th>
+                        <th style="width:10;">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sale : ${sales}" th:if="${sale.way_pay.id == 9}">
+                        <th th:text="${sale.cashier.user_enterprise.user.name}"></th>
+                        <th th:text="${sale.client.user_enterprise.user.name + ' ' + sale.client.user_enterprise.user.lastName}"></th>
+                        <th th:text="${#dates.format(sale.sale_date, 'dd-MMM-yyyy HH:mm')}"></th>
+                        <th th:text="${sale.total}"></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
 

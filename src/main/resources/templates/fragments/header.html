@@ -56,7 +56,7 @@
                     <!--<a onclick="if($('#div_mapa').is(':visible'))$('#div_mapa').hide();else $('#div_mapa').show();" style="cursor:pointer;" class="btn btn-floating btn-small tooltipped" data-tooltip="Mostrar mapa" data-position="left"> <i class="material-icons">location_on</i> </a>-->
                 </li>
                 <li>
-                    <a href="/larisa/sale/list" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
+                    <a th:href="${'/larisa/sale/list/' + current_date }" class="btn btn-floating btn-small cyan tooltipped modal-trigger"
                        data-tooltip="Caja" data-position="left">
                         <i class="material-icons">keyboard</i> </a>
                 </li>
