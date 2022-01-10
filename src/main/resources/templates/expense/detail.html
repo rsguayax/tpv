@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+    <style>
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<form action="save" method="post">
+    <div class="" style="">
+        <div class="row" style="">
+            <div class="col s12 m12">
+                <br/><br/>
+                <div class="label container"
+                     style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                    Gasto.
+                </div>
+
+                <section>
+                    <div class="row" style="margin-top: -20px;">
+                        <div class="input-field col m12 s12">
+
+                            <input th:if="${buy == null}" type="hidden" id="id_gasto" name="id_gasto" value="-1" />
+                            <input th:if="${buy != null}" th:value="${buy.id}" type="hidden" id="id_gasto" name="id_gasto" />
+
+                            <input th:if="${buy == null}" type="text" id="value" name="value"
+                                   style="height: 20px; margin: -10px 0px -20px 0px; font-size: 20px;" class="validate"/>
+                            <input th:if="${buy != null}" th:value="${buy.total}" type="text"
+                                   id="value" name="value" class="validate" style="font-size: 20px;"/>
+                            <label>Valor del Gasto.</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m3 s6 ">
+                            <select name="document_type" id="document_type">
+                                <option value="" disabled selected>Seleccione</option>
+                                <span th:each="item : ${type_document}">
+                                    <span th:if="${buy != null}">
+                                        <option th:if="${item.id != buy.document_type.id}" th:value="${item.id}"
+                                                th:text="${item.name}"></option>
+                                        <option th:if="${item.id == buy.document_type.id}" th:value="${item.id}"
+                                            th:text="${item.name}" selected="selected"></option>
+                                    </span>
+                                    <span th:if="${buy == null}">
+                                        <option th:value="${item.id}" th:text="${item.name}"></option>
+                                    </span>
+                                </span>
+                            </select>
+                            <label>Tipo documento.</label>
+                        </div>
+                        <div class="input-field col m3 s6">
+                            <input th:if="${buy == null}" type="text" id="document_number" name="document_number"
+                                   style="height: 20px; margin: -10px 0px -20px 0px;" class="validate"/>
+                            <input th:if="${buy != null}" th:value="${buy.document_number}" type="text"
+                                   id="document_number" name="document_number" class="validate"/>
+                            <label>Nro. documento.</label>
+                        </div>
+                        <div class="input-field col m3 s6">
+                            <input th:if="${buy == null}" type="text" class="validate datepicker" id="buy_date" name="buy_date"
+                                   style="height: 20px; margin: -10px 0px -20px 0px;"/>
+                            <input th:if="${buy != null}" class="validate datepicker" th:value="${#dates.format(buy.buy_date, 'MM/dd/yyyy')}" type="text"
+                                   id="buy_date" name="buy_date"/>
+                            <label class="active" for="first_name2">Fecha de compra:</label>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: -20px;">
+                        <div class="input-field col m6 s12">
+                            <textarea th:if="${buy == null}" id="motive" name="motive"
+                                      class="materialize-textarea"></textarea>
+                            <textarea th:if="${buy != null}" th:text="${buy.description}" id="motive"
+                                      name="motive" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Motivo de compra</label>
+                        </div>
+                        <div class="input-field col m6 s12">
+                            <textarea th:if="${buy == null}" id="observation" name="observation"
+                                      class="materialize-textarea"></textarea>
+                            <textarea th:if="${buy != null}" th:text="${buy.observation}" id="observation"
+                                      name="observation" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Observación</label>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="pull-right">
+        <button
+                style="background-color: #004370; position:fixed;margin-left:-50px;margin-top:-50px;z-index:1000;"
+                class="btn-floating btn waves-effect waves-light tooltipped modal-trigger" type="submit"
+                data-tooltip="Guardar" data-position="left">
+            <i class="material-icons right">save</i>
+        </button>
+    </div>
+</form>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script>
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+    }
+
+    const user = {
+        firstName: 'Harper',
+        lastName: 'Perez',
+    };
+
+</script>
+</body>
+</html>

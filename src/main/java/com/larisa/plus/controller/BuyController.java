@@ -6,7 +6,10 @@ import com.larisa.plus.model.buy.BuyRepository;
 import com.larisa.plus.model.catalog.CatalogRepository;
 import com.larisa.plus.model.catalog.ItemCatalogRepository;
 import com.larisa.plus.model.user.UserRepository;
+import com.larisa.plus.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +35,11 @@ public class BuyController {
     @GetMapping("/list")
     public ModelAndView getList(Model model){
         int idSuc = 1;
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        model.addAttribute("user", userDetails );
+
         List<Buy> buys = byRep.getBuyBySucursal_Id(idSuc);
         model.addAttribute("buys", buys);
         ModelAndView mv = new ModelAndView("buy/list");
@@ -40,6 +48,11 @@ public class BuyController {
 
     @GetMapping("/{buy_id}")
     public ModelAndView getBuy(Model model, @PathVariable("buy_id") int id){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        model.addAttribute("user", userDetails );
+
         Buy buy = byRep.getBuyById(id);
         model.addAttribute("type_document", icRep.findByCatalog_Id(3) );/*types of documents*/
         model.addAttribute("status_buy", icRep.findByCatalog_Id(2));/*status of buy*/

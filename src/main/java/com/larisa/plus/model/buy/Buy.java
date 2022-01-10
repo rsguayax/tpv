@@ -22,11 +22,11 @@ public class Buy extends BaseEntity {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "provider")
+    @JoinColumn(name = "provider", nullable = true)
     private Provider provider;
 
     @ManyToOne
-    @JoinColumn(name = "sucursal")
+    @JoinColumn(name = "sucursal", nullable = true)
     private Sucursal sucursal;
 
     private Date buy_date;
@@ -42,11 +42,11 @@ public class Buy extends BaseEntity {
     private ItemCatalog document_type;
 
     @ManyToOne
-    @JoinColumn(name = "status")
+    @JoinColumn(name = "status", nullable = true)
     private ItemCatalog status;
 
     @ManyToOne
-    @JoinColumn(name = "user_enterprise")
+    @JoinColumn(name = "user_enterprise", nullable = true)
     private UserEnterprise user_enterprise;
 
     private String observation;

@@ -104,6 +104,7 @@ public class SaleController {
                 sd.setSale(sale);
                 sd.setQuantity( Integer.parseInt(quantities[i]) );
                 sd.setArticle_sucursal( asu );
+                sd.setSale_price(asu.getSale_price().doubleValue());
                 sdeRep.save(sd);
                 //ACTUALIZAMOS stock
                 asu.setStock( asu.getStock() - sd.getQuantity() );

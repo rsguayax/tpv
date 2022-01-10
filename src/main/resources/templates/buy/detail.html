@@ -26,11 +26,16 @@
                             <select name="status" id="status" style="background-color: blue;">
                                 <option value="" disabled selected>Seleccione</option>
                                 <span th:each="item : ${status_buy}">
-                                <option th:if="${item.id != buy.status.id}" th:value="${item.id}"
-                                        th:text="${item.name}"></option>
-                                <option th:if="${item.id == buy.status.id}" th:value="${item.id}" th:text="${item.name}"
-                                        selected="selected"></option>
-                            </span>
+                                    <span th:if="${buy != null}">
+                                        <option th:if="${item.id != buy.status.id}" th:value="${item.id}"
+                                                th:text="${item.name}"></option>
+                                        <option th:if="${item.id == buy.status.id}" th:value="${item.id}" th:text="${item.name}"
+                                                selected="selected"></option>
+                                    </span>
+                                    <span th:if="${buy == null}">
+                                        <option th:value="${item.id}" th:text="${item.name}"></option>
+                                    </span>
+                                </span>
                             </select>
                             <label>Estado.</label>
                         </div>
@@ -39,10 +44,15 @@
                             <select name="document_type" id="document_type">
                                 <option value="" disabled selected>Seleccione</option>
                                 <span th:each="item : ${type_document}">
-                                    <option th:if="${item.id != buy.document_type.id}" th:value="${item.id}"
-                                            th:text="${item.name}"></option>
-                                    <option th:if="${item.id == buy.document_type.id}" th:value="${item.id}"
+                                    <span th:if="${buy != null}">
+                                        <option th:if="${item.id != buy.document_type.id}" th:value="${item.id}"
+                                                th:text="${item.name}"></option>
+                                        <option th:if="${item.id == buy.document_type.id}" th:value="${item.id}"
                                             th:text="${item.name}" selected="selected"></option>
+                                    </span>
+                                    <span th:if="${buy == null}">
+                                        <option th:value="${item.id}" th:text="${item.name}"></option>
+                                    </span>
                                 </span>
                             </select>
                             <label>Tipo documento.</label>
