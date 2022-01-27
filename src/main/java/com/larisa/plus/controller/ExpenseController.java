@@ -59,6 +59,7 @@ public class ExpenseController {
     @Autowired
     private BuyRepository buyRep;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 
     @GetMapping("/list/{tipo_documento}")
     public ModelAndView listExpenses(Model model, @PathVariable("tipo_documento") int tipo){ //, @PathVariable("current_date") String fecha_actual
@@ -76,6 +77,7 @@ public class ExpenseController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         model.addAttribute("user", userDetails );
+        model.addAttribute("date", sdf.format(new Date()));
         return mv;
     }
 
@@ -89,6 +91,7 @@ public class ExpenseController {
         model.addAttribute("type_document", icRep.findByCatalog_Id(3) );/*types of documents*/
         Buy buy = buyRep.getBuyById(id);
         model.addAttribute("buy", buy);
+        model.addAttribute("date", sdf.format(new Date()));
         return new ModelAndView("expense/detail");
     }
 
@@ -112,7 +115,7 @@ public class ExpenseController {
             } else {//editamos gasto existente
                 buy = buyRep.getBuyById(id_gasto);
             }
-            buy.setBuy_date(sf.parse(req.getParameter("buy_date")));
+            buy.setBuyDate(sf.parse(req.getParameter("buy_date")));
             buy.setDescription(req.getParameter("motive"));
             buy.setObservation(req.getParameter("observation"));
             buy.setDocument_type(icRep.findById(Integer.parseInt(req.getParameter("document_type"))));

@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,6 +33,7 @@ public class BuyController {
     @Autowired
     private BuyRepository byRep;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 
     @GetMapping("/list")
     public ModelAndView getList(Model model){
@@ -43,6 +46,8 @@ public class BuyController {
         List<Buy> buys = byRep.getBuyBySucursal_Id(idSuc);
         model.addAttribute("buys", buys);
         ModelAndView mv = new ModelAndView("buy/list");
+
+        model.addAttribute("date", sdf.format(new Date()));
         return mv;
     }
 
@@ -57,6 +62,7 @@ public class BuyController {
         model.addAttribute("type_document", icRep.findByCatalog_Id(3) );/*types of documents*/
         model.addAttribute("status_buy", icRep.findByCatalog_Id(2));/*status of buy*/
         model.addAttribute("buy", buy);
+        model.addAttribute("date", sdf.format(new Date()));
         return new ModelAndView("buy/detail");
     }
 

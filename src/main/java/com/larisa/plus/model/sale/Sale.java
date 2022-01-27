@@ -6,10 +6,7 @@ import com.larisa.plus.model.client.Client;
 import com.larisa.plus.model.config.BaseEntity;
 import com.larisa.plus.model.enterprise.Sucursal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /*  VENTA   */
@@ -50,7 +47,9 @@ public class Sale extends BaseEntity {
     * Cuando se trata solo de una cotización, no se afecta el stock de los artículos.
     * */
     @JoinColumn(name = "sale_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date sale_date;
+
     private Date quote_date;
     private Date register;
 

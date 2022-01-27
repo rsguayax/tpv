@@ -52,7 +52,7 @@
                             <th>
                                 <a th:href="${'../'+ item.id}" th:text="${item.document_number}"></a>
                             </th>
-                            <th th:text="${#dates.format(item.buy_date, 'dd - MMM - yyyy')}"></th>
+                            <th th:text="${#dates.format(item.buyDate, 'dd - MMM - yyyy')}"></th>
                             <th th:text="${'$'+item.total}" ></th>
                             <th th:text="${item.description}" ></th>
                         </tr>

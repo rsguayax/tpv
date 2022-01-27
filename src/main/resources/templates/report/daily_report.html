@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Artículos</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body class="marca_agua">
+<th:block th:include="fragments/header :: header"></th:block>
+<br/><br/><br/>
+<div class="container" style="">
+    <div class="row">
+        <div class="input-field col m3 s6">
+            <input class="validate datepicker" th:value="${#dates.format(date, 'MM-dd-yyyy')}" type="text"
+                   id="date" name="date" onchange="ver_cierre();"/>
+            <label class="active" for="date">Fecha de cierre:</label>
+        </div>
+    </div>
+
+        <span th:text="${#dates.format(date, 'dd - MMM - yyyy')}"></span>
+         <div class="row" style="font-size: 20px;font-weight: bold; background-color: yellow;">
+             CIERRE DE CAJA: $ <span th:text="${total}" class=""></span>
+         </div>
+        <div class="row" style="font-size: 16px;font-weight: bold; background-color: #2aabd2;">
+            Total ventas diarias: $ <span th:text="${total_ventas}" class=""></span>
+        </div>
+
+        <div class="row" style="margin-top: 50px; margin-left:-40px;">
+            <div class="col s12 m6" style="background-color: #c1e2b3">
+                <table>
+                    <tr>
+                        <td>Efectivo: </td>
+                        <td th:text="${'$'+efectivo}"></td>
+                    </tr>
+                    <tr>
+                        <td>Transferencia: </td>
+                        <td th:text="${'$'+transferencia}"></td>
+                    </tr>
+                    <tr>
+                        <td>Crédito: </td>
+                        <td th:text="${'$'+credito}"></td>
+                    </tr>
+                    <tr>
+                        <td>Tarjeta: </td>
+                        <td th:text="${'$'+tarjeta}"></td>
+                    </tr>
+                    <tr>
+                        <td>Otro: </td>
+                        <td th:text="${'$'+otro}"></td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <div class="thumbnail">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width:15;">Cajero</th>
+                            <th style="width:15;">Cliente</th>
+                            <th style="width:15;">Forma de Pago</th>
+                            <th style="width:15;">Fecha Venta</th>
+                            <th style="width:10;">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sale : ${sales}">
+                            <th th:text="${sale.cashier.user_enterprise.user.name}"></th>
+                            <th th:text="${sale.client.user_enterprise.user.name + ' ' + sale.client.user_enterprise.user.lastName}"></th>
+                            <th th:text="${sale.way_pay.name}"></th>
+                            <th th:text="${#dates.format(sale.sale_date, 'dd-MMM-yyyy HH:mm')}"></th>
+                            <th th:text="${sale.total}"></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col s12 m6" style="background-color: #8f8f8f">
+                Total gastos: $<span th:text="${total_gastos}"></span>
+                <div class="thumbnail">
+                    <table id="datos" class="responsive-table stripe">
+                        <thead>
+                        <th style="width: 20%;">Nombre</th>
+                        <th style="width: 30%;">Descripción</th>
+                        <th style="width: 15%;">Usuario</th>
+                        <th style="width: 10%;">Iva</th>
+                        <th style="width: 10%;">Total
+                        </thead>
+                        <tbody th:each="buy : ${buys}">
+                        <td th:text="${buy.name}"></td>
+                        <td th:text="${buy.description}"></td>
+                        <td th:text="${buy.user_enterprise.name}"></td>
+                        <td th:text="${buy.iva}"></td>
+                        <td th:text="${buy.total}"></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m6 well" style="">
+                Total efectivo diario: <span th:text="${ total}"></span>
+            </div>
+        </div>
+</div>
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate", new Date());
+    });
+    function ver_cierre(){
+        console.log('ir a: '+'/larisa/report/daily_report/'+date.value)
+        window.open('/larisa/report/daily_report/'+date.value, this);
+    }
+</script>
+</body>
+</html>

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,9 @@ public class SaleController {
         int enterprise_id = 1;//LAVADORA EL REY
         UserEnterprise ue = uenRep.findByUser_IdAndEnterprise_Id(userDetails.getId(), enterprise_id);
         model.addAttribute("ue", ue);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        model.addAttribute("date", sdf.format(new Date()));
+
         return mv;
     }
 
@@ -148,6 +152,8 @@ public class SaleController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         model.addAttribute("user", userDetails );
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        model.addAttribute("date", sdf.format(new Date()));
         return mv;
     }
 

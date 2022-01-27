@@ -7,10 +7,7 @@ import com.larisa.plus.model.provider.Provider;
 import com.larisa.plus.model.user.User;
 import com.larisa.plus.model.user.UserEnterprise;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /*  COMPRA   */
@@ -29,7 +26,9 @@ public class Buy extends BaseEntity {
     @JoinColumn(name = "sucursal", nullable = true)
     private Sucursal sucursal;
 
-    private Date buy_date;
+    @JoinColumn(name = "buy_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date buyDate;
 
     @Column(precision=10, scale=2)
     private double iva;
@@ -51,6 +50,7 @@ public class Buy extends BaseEntity {
 
     private String observation;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date register;
 
     public Buy() {
@@ -96,12 +96,12 @@ public class Buy extends BaseEntity {
         this.sucursal = sucursal;
     }
 
-    public Date getBuy_date() {
-        return buy_date;
+    public Date getBuyDate() {
+        return buyDate;
     }
 
-    public void setBuy_date(Date buy_date) {
-        this.buy_date = buy_date;
+    public void setBuyDate(Date buyDate) {
+        this.buyDate = buyDate;
     }
 
     public double getIva() {

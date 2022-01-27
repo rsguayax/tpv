@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 public class IndexController {
@@ -71,6 +73,10 @@ public class IndexController {
         UserEnterprise ue = uenRep.findByUser_IdAndEnterprise_Id(userDetails.getId(), enterprise_id);
         model.addAttribute("ue", ue);
         ModelAndView mv = new ModelAndView("index/home");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        model.addAttribute("date", sdf.format(new Date()));
+        System.out.println("fecha diaria: "+sdf.format(new Date()));
         return mv;
     }
 }

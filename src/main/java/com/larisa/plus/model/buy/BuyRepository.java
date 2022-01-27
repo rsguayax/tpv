@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BuyRepository extends CrudRepository<Buy, Long> {
@@ -13,5 +14,8 @@ public interface BuyRepository extends CrudRepository<Buy, Long> {
     public List<Buy> getBuyBySucursal_Id( @Param("id") int id );
 
     Buy getBuyById( int id );
+
+    @Query("SELECT a FROM Buy a WHERE DATE(a.buyDate) =:date")
+    List<Buy> findByBuyDate(@Param("date") Date date);
 
 }

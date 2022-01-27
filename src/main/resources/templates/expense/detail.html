@@ -62,7 +62,7 @@
                         <div class="input-field col m3 s6">
                             <input th:if="${buy == null}" type="text" class="validate datepicker" id="buy_date" name="buy_date"
                                    style="height: 20px; margin: -10px 0px -20px 0px;"/>
-                            <input th:if="${buy != null}" class="validate datepicker" th:value="${#dates.format(buy.buy_date, 'MM/dd/yyyy')}" type="text"
+                            <input th:if="${buy != null}" class="validate datepicker" th:value="${#dates.format(buy.buyDate, 'MM/dd/yyyy')}" type="text"
                                    id="buy_date" name="buy_date"/>
                             <label class="active" for="first_name2">Fecha de compra:</label>
                         </div>
