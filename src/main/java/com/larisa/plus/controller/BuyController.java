@@ -33,7 +33,7 @@ public class BuyController {
     @Autowired
     private BuyRepository byRep;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
 
     @GetMapping("/list")
     public ModelAndView getList(Model model){

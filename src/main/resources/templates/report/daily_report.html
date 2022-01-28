@@ -22,26 +22,22 @@
 <div class="container" style="">
     <div class="row">
         <div class="input-field col m3 s6">
-            <input class="validate datepicker" th:value="${#dates.format(date, 'MM-dd-yyyy')}" type="text"
+            <input class="datepicker" th:value="${#dates.format(date, 'dd MMM, yyyy')}" type="text"
                    id="date" name="date" onchange="ver_cierre();"/>
             <label class="active" for="date">Fecha de cierre:</label>
         </div>
     </div>
 
-        <span th:text="${#dates.format(date, 'dd - MMM - yyyy')}"></span>
          <div class="row" style="font-size: 20px;font-weight: bold; background-color: yellow;">
              CIERRE DE CAJA: $ <span th:text="${total}" class=""></span>
          </div>
-        <div class="row" style="font-size: 16px;font-weight: bold; background-color: #2aabd2;">
-            Total ventas diarias: $ <span th:text="${total_ventas}" class=""></span>
-        </div>
 
         <div class="row" style="margin-top: 50px; margin-left:-40px;">
             <div class="col s12 m6" style="background-color: #c1e2b3">
                 <table>
                     <tr>
                         <td>Efectivo: </td>
-                        <td th:text="${'$'+efectivo}"></td>
+                        <td> <span class="chip" th:text="${'$'+efectivo}"></span></td>
                     </tr>
                     <tr>
                         <td>Transferencia: </td>
@@ -59,8 +55,16 @@
                         <td>Otro: </td>
                         <td th:text="${'$'+otro}"></td>
                     </tr>
+                    <tr style="font-weight: bold;">
+                        <td>Total ventas diarias: </td>
+                        <td>$ <span th:text="${total_ventas}" class=""></span></td>
+                    </tr>
                 </table>
                 <br/><br/>
+                <div class="label"
+                     style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                    Detalle de Ventas.
+                </div>
                 <div class="thumbnail">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -85,31 +89,31 @@
                 </div>
 
             </div>
-            <div class="col s12 m6" style="background-color: #8f8f8f">
-                Total gastos: $<span th:text="${total_gastos}"></span>
+            <div class="col s12 m6" style="background-color: #ce8483;">
+                <table>
+                    <tr style="font-weight: bold;">
+                        <td>Total gastos: </td>
+                        <td><span class="chip" th:text="${'$'+total_gastos}"></span></td>
+                    </tr>
+                </table>
                 <div class="thumbnail">
+                    <div class="label"
+                         style="border-left: 3px solid #0000ff; padding-left:10px; font-weight: bold; font-size: 16px;">
+                        Detalle de Gastos.
+                    </div>
                     <table id="datos" class="responsive-table stripe">
                         <thead>
-                        <th style="width: 20%;">Nombre</th>
                         <th style="width: 30%;">Descripción</th>
                         <th style="width: 15%;">Usuario</th>
-                        <th style="width: 10%;">Iva</th>
-                        <th style="width: 10%;">Total
+                        <th style="width: 35%;">Total</th>
                         </thead>
                         <tbody th:each="buy : ${buys}">
-                        <td th:text="${buy.name}"></td>
                         <td th:text="${buy.description}"></td>
                         <td th:text="${buy.user_enterprise.name}"></td>
-                        <td th:text="${buy.iva}"></td>
                         <td th:text="${buy.total}"></td>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m6 well" style="">
-                Total efectivo diario: <span th:text="${ total}"></span>
             </div>
         </div>
 </div>
@@ -118,11 +122,12 @@
 
 <script th:inline="javascript">
     $(document).ready(function(){
-        $('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate", new Date());
+       // $('.datepicker').datepicker( {"format":'dd/mm/yyyy'} ).datepicker("setDate", new Date());
     });
     function ver_cierre(){
         console.log('ir a: '+'/larisa/report/daily_report/'+date.value)
-        window.open('/larisa/report/daily_report/'+date.value, this);
+        if(date.value != '')
+            window.open('/larisa/report/daily_report/'+date.value, this);
     }
 </script>
 </body>

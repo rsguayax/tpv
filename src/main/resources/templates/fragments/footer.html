@@ -2,7 +2,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="row">
-                <div class="col s3 m3 tooltipped" data-balloon-length="medium"  data-tooltip="Grupo de Investigación Sistemas Basados en el Conocimiento" data-balloon-pos="right">
+                <div class="col s3 m3 tooltipped" data-balloon-length="medium"  data-tooltip="Lavadora y Lubricadora EL REY" data-balloon-pos="right">
                     <img th:src="@{/img/logo-elrey.png}"  style="height: 63px; " class="circle"/>
                 </div>
                 <div class="col s9 m9">
@@ -13,17 +13,17 @@
         </div>
     </div>
 
-    <script th:src="@{/js/modernizr.js}"></script>
-    <!--<script type="text/javascript" th:src="@{/js/jquery-1.11.2.js}" ></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <!--    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/primeui-1.0-min.js}"></script>
 
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-
-    <script type="text/javascript" th:src="@{/js/moment.js}"  ></script>
-    <script type="text/javascript" th:src="@{/js/twix.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/moment.js}"></script>
+    <script type="text/javascript" th:src="@{/js/twix.js}"></script>
     <!--    <script type="text/javascript" src="https:////code.jquery.com/jquery-1.12.3.js"></script>-->
     <!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>-->
-    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+    <!--    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>-->
 
     <!--<script th:src="@{/DataTables/datatables.min.js}"></script>-->
     <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -32,30 +32,23 @@
     <!--<script src="https://cdn.datatables.net/1.10.20/js/dataTables.material.min.js"></script>-->
 
 
-
     <!--    <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script language="JavaScript" type="text/javascript" th:src="@{/js/dataTables.buttons.min.js}"></script>-->
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <!--    <script language="JavaScript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-        <script language="JavaScript" type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-        <script language="JavaScript" type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-
-        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js"></script>
-        <script language="JavaScript" type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>-->
-
-    <script src="https://cdn.tinymce.com/4/jquery.tinymce.min.js"></script>
-    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script type="text/javascript" th:src="@{/js/util.js}"></script>
-    <script type="text/javascript" th:src="@{/js/numero_a_letras.js}"></script>
+    <script th:src="@{/js/respond.src.js}"></script>
+    <script th:src="@{/js/jquery.icheck.js}"></script>
+    <script th:src="@{/js/placeholders.min.js}"></script>
+    <script th:src="@{/js/waypoints.min.js}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-    <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
-    <script type="text/javascript" th:src="@{/js/primeui-1.0-min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/numero_a_letras.js}"></script>
+    <script type="text/javascript" th:src="@{/js/util.js}"></script>
+
 
     <script>
         function mueveReloj() {
@@ -79,7 +72,17 @@
             $('.tap-target').tapTarget();
             $('.tooltipped').tooltip();
             $('.modal').modal();
-            $('.datepicker').datepicker('format', 'dd-MM-yyyy');
+            $('.datepicker').datepicker({
+                'format':'dd mmm, yyyy',
+                i18n: {
+                    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"],
+                    weekdays: ["Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+                    weekdaysShort: ["Dom","Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    weekdaysAbbrev: ["D","L", "M", "M", "J", "V", "S"]
+                },
+                autoclose: true
+            });
             //$('.datepicker').datepicker('format', 'yyyy,mm,dd');
             $('.collapsible').collapsible();
            /* $('#content').pushpin({

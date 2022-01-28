@@ -59,7 +59,7 @@ public class ExpenseController {
     @Autowired
     private BuyRepository buyRep;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
 
     @GetMapping("/list/{tipo_documento}")
     public ModelAndView listExpenses(Model model, @PathVariable("tipo_documento") int tipo){ //, @PathVariable("current_date") String fecha_actual
@@ -99,7 +99,6 @@ public class ExpenseController {
     public String guardar(Model model, HttpServletRequest req) throws ParseException {
         System.out.println("ingreso a guardar");
         try {
-            SimpleDateFormat sf = new SimpleDateFormat("MM/dd/yyyy");
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
@@ -115,7 +114,7 @@ public class ExpenseController {
             } else {//editamos gasto existente
                 buy = buyRep.getBuyById(id_gasto);
             }
-            buy.setBuyDate(sf.parse(req.getParameter("buy_date")));
+            buy.setBuyDate(sdf.parse(req.getParameter("buy_date")));
             buy.setDescription(req.getParameter("motive"));
             buy.setObservation(req.getParameter("observation"));
             buy.setDocument_type(icRep.findById(Integer.parseInt(req.getParameter("document_type"))));

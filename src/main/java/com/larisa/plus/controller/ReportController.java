@@ -59,7 +59,7 @@ public class ReportController {
     @Autowired
     private SaleRepository saleRep;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
 
     /***
      * MÉTODO PARA OBTENER EL REPORTE DIARIO DE CAJA.  SUMAMOS TODO EL EFECTIVO DEL DÍA Y RESTAMOS CON LOS GASTOS DEL DÍA PARA DETERMINAR EL SALDO EFECTIVO DIARIO
@@ -68,7 +68,8 @@ public class ReportController {
      * @return
      */
     @GetMapping("/daily_report/{date}")
-    public ModelAndView listExpenses(Model model, @PathVariable("date") String date){ //, @PathVariable("current_date") String fecha_actual
+    public ModelAndView listExpenses(Model model, @PathVariable(value = "date",required = false) String date){ //, @PathVariable("current_date") String fecha_actual
+        System.out.println("fecha recibida: "+date);
         ModelAndView mv = new ModelAndView("report/daily_report");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();

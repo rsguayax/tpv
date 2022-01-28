@@ -56,6 +56,8 @@ public class SaleController {
     @Autowired
     private ArticleSucursalRepository asuRep;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
+
     @GetMapping("/")
     public ModelAndView getListArticles(Model model){
         int idSuc = 1;
@@ -68,7 +70,6 @@ public class SaleController {
         int enterprise_id = 1;//LAVADORA EL REY
         UserEnterprise ue = uenRep.findByUser_IdAndEnterprise_Id(userDetails.getId(), enterprise_id);
         model.addAttribute("ue", ue);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         model.addAttribute("date", sdf.format(new Date()));
 
         return mv;
@@ -123,7 +124,7 @@ public class SaleController {
    // @GetMapping("/list/{current_date}")
     @GetMapping("/list")
     public ModelAndView getSales(Model model){ //, @PathVariable("current_date") String fecha_actual
-        List<Sale> sales =  (List<Sale>)salRep.findAll();// (List<Sale>)salRep.findBySale_date(fecha_actual);
+        List<Sale> sales =  (List<Sale>)salRep.findByStatus_Id(12);// (List<Sale>)salRep.findBySale_date(fecha_actual);
 
         double total_ventas = 0;
 
@@ -152,7 +153,6 @@ public class SaleController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         model.addAttribute("user", userDetails );
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         model.addAttribute("date", sdf.format(new Date()));
         return mv;
     }

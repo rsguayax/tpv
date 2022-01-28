@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +77,8 @@ public class ArticleController {
     @Autowired
     private ArticleVehicleRepository aveRep;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy");
+
     @GetMapping("/edit/{codigo}")
     public String getList(Model model,  @PathVariable("codigo") String codigo){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -92,6 +95,8 @@ public class ArticleController {
             model.addAttribute("avehiculos", null);
         else
             model.addAttribute("avehiculos", aveRep.findByArticle_Id(asu.getArticle().getId()));
+
+        model.addAttribute("date", sdf.format(new Date()));
 
         return "article/edit";
     }

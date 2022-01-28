@@ -13,7 +13,10 @@ public interface SaleRepository extends CrudRepository<Sale, Long> {
     //List<Sale> findBySale_date(Date fecha);
 
     //List<Sale> findBySale_date(String date);
+    //@Query("SELECT a FROM Sale a WHERE a.status.id =: status")
+    List<Sale> findByStatus_Id(@Param("status") int status);
 
     @Query("SELECT a FROM Sale a WHERE DATE(a.sale_date) =:date")
     List<Sale> findBySale_date(@Param("date") Date date);
+
 }
