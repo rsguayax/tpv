@@ -324,7 +324,7 @@
                         console.log(JSON.stringify(data))
 
                         if (data.length == 1) {
-                            select_product(data[0].code, data[0].name + '. ' +  data[0].mark.name + '. '+ item.measure.name +'. '+data[0].description, data[0].mark.name, data[0].measure.name, data[0].id, data[0].sale_price)
+                            select_product(data[0].code, data[0].name + '. ' +  data[0].mark.name + '. '+ data[0].measure.name +'. '+data[0].description, data[0].mark.name, data[0].measure.name, data[0].id, data[0].sale_price)
                         } else {
                             response.call(this, $.map(data, function (item) {
                                 return {
